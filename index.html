@@ -10,6 +10,8 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function() {
+  var run_options = '{ "optimization_problem" : "Ackley" }';
+
 	var socket = io.connect('http://127.0.0.1:5000');
 	socket.on('connect', function() {
 		socket.send('User has connected!');
@@ -28,7 +30,7 @@ $(document).ready(function() {
 		$("#log").html("");
 	});
 	$('button#run').click(function() {
-		socket.emit('run_','run_ happened');
+		socket.emit('run',run_options);
 		//send({type: "run"});
 	});
     $('button#terminate').click(function() {

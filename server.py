@@ -1,5 +1,5 @@
 from flask import Flask 
-from flask_socketio import SocketIO, send
+from flask_socketio import SocketIO, send, emit
 from threading import Thread
 
 
@@ -115,7 +115,10 @@ def onMsgRun(msg):
 
     from experimental_designs import experimental_designs
     ED_fun = experimental_designs( parsed_json['experimental_design'], data.dim )
-    exp_des = ED_fun.run()
+    sucess, exp_des = ED_fun.run()
+    if not sucess:
+        emit('error_msg', exp_des)
+        return
 
     from surrogate_models import surrogate_models
     SM_fun = surrogate_models( parsed_json['surrogate_model'] )
@@ -125,7 +128,10 @@ def onMsgRun(msg):
     # Use DYCORS with 100d candidate points
     from adaptive_samplings import adaptive_samplings
     AS_fun = adaptive_samplings(data, parsed_json['adaptive_sampling'])
-    adapt_samp = AS_fun.run()
+    sucess, adapt_samp = AS_fun.run()
+    if not sucess:
+        emit('error_msg', adapt_samp)
+        return
 
     hiding_this_in_a_function(data, exp_des, surrogate, adapt_samp, parsed_json['surrogate_model']['maxeval'])
 

@@ -10,7 +10,7 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function() {
-  var run_options = '{ "optimization_problem" : {"function" : "Ackley" , "dim" : 10} , "experimental_design" : { "function" : "SymmetricLatinHypercube" , "samples" : 21 } , "surrogate_model" : { "function" : "RBFInterpolant" , "maxeval" : 500 , "tail" : "LinearTail" , "kernel" : "CubicKernel" } , "adaptive_sampling" : { "function" : "CandidateDYCORS" , "numcand" : 100 } , "controller" : { "thread" : 1  } }';
+  var run_options = '{ "optimization_problem" : {"function" : "Ackley" , "dim" : 10} , "experimental_design" : { "function" : "SymmetricLatinHypercube" , "samples" : 21 } , "surrogate_model" : { "function" : "RBFInterpolant" , "maxeval" : 500 , "tail" : "LinearTail" , "kernel" : "CubicKernel" } , "adaptive_sampling" : { "function" : "CandidateDYCORS" , "numcand" : 100 , "weights" : None } , "controller" : { "thread" : 1  } }';
 
 
 	var socket = io.connect('http://127.0.0.1:5000');

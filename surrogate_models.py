@@ -8,4 +8,4 @@ class surrogate_models:
 
 	def run(self):
 		if self.parsed_json['function'] == 'RBFInterpolant':
-			return RBFInterpolant(kernel=self.kernel_dict[ self.parsed_json['kernel'] ], tail=self.tail_dict[ self.parsed_json['tail'] ], maxp=self.parsed_json['maxeval'] )
+			return RBFInterpolant(kernel=self.kernel_dict[ self.parsed_json['kernel'] ], tail=self.tail_dict[ self.parsed_json['tail'] ], maxp=self.parsed_json['maxeval'] ) 
