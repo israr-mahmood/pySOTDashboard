@@ -9,5 +9,5 @@ class optimization_problems:
 	def run(self):
 		if self.parsed_json['function'] == 'custom':
 			pass
-		if self.parsed_json['function'] == 'Ackley':
+		elif self.parsed_json['function'] == 'Ackley':
 			return Ackley(dim=self.parsed_json['dim'])

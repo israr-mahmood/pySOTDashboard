@@ -37,10 +37,10 @@ class adaptive_samplings:
 			elif self.parsed_json['function'] == 'MultiSampling':
 				return True, MultiSampling(strategy_list=self.parsed_json['strategy_list'], cycle=self.parsed_json['cycle']) 
 			elif self.parsed_json['function'] == 'MultiStartGradient':
-				return True, MultiStartGradient((self.data, method=self.parsed_json['method'], num_restarts=self.parsed_json['num_restarts']))
+				return True, MultiStartGradient(self.data, method=self.parsed_json['method'], num_restarts=self.parsed_json['num_restarts'])
 			else:
-				return False 'Invalid Adaptive Sampling'
+				return False, 'Invalid Adaptive Sampling'
 
 		except:
-			return False 'candidate points are incorrect or weights aren’t a list in [0, 1]'
+			return False, 'candidate points are incorrect or weights are not a list in [0, 1]'
 
