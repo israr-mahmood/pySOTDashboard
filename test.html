@@ -10,33 +10,38 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function() {
-  var run_options = '{ "optimization_problem" : {"function" : "Ackley" , "dim" : 10} , "experimental_design" : { "function" : "SymmetricLatinHypercube" , "samples" : 21 } , "surrogate_model" : { "function" : "RBFInterpolant" , "maxeval" : 500 , "tail" : "LinearTail" , "kernel" : "CubicKernel" } , "adaptive_sampling" : { "function" : "CandidateDYCORS" , "numcand" : 100 , "weights" : None } , "controller" : { "thread" : 1  } }';
+  var run_options = '{ "optimization_problem" : {"function" : "Ackley" , "dim" : 10} , "experimental_design" : { "function" : "SymmetricLatinHypercube" , "samples" : 21 } , "surrogate_model" : { "function" : "RBFInterpolant" , "maxeval" : 500 , "tail" : "LinearTail" , "kernel" : "CubicKernel" } , "adaptive_sampling" : { "function" : "CandidateDYCORS" , "numcand" : 100 , "weights" : 1 } }';
 
 
-	var socket = io.connect('http://127.0.0.1:5000');
-	socket.on('connect', function() {
-		socket.send('User has connected!');
-		socket.emit('this_event','this happened');
-	});
-	socket.on('message', function(msg) {
-		$("#messages").append('<li>'+msg+'</li>');
-		$('#log').append('<br>' + msg);
-		console.log('Received message');
-	});
-	$('#sendbutton').on('click', function() {
-		socket.send($('#myMessage').val());
-		$('#myMessage').val('');
-	});
-	$('button#clear_log').click(function() {
-		$("#log").html("");
-	});
-	$('button#run').click(function() {
-		socket.emit('run',run_options);
-		//send({type: "run"});
-	});
+  var socket = io.connect('http://127.0.0.1:5000');
+  socket.on('connect', function() {
+    socket.send('User has connected!');
+    socket.emit('this_event','this happened');
+    socket.emit('haha','this happened');
+  });
+  socket.on('zaza',function(msg){
+    var htmltxt = $(msg)
+    $('#log').append(htmltxt);
+  });
+  socket.on('message', function(msg) {
+    $("#messages").append('<li>'+msg+'</li>');
+    $('#log').append('<br>' + msg);
+    console.log('Received message');
+  });
+  $('#sendbutton').on('click', function() {
+    socket.send($('#myMessage').val());
+    $('#myMessage').val('');
+  });
+  $('button#clear_log').click(function() {
+    $("#log").html("");
+  });
+  $('button#run').click(function() {
+    socket.emit('run',run_options);
+    //send({type: "run"});
+  });
     $('button#terminate').click(function() {
-		socket.emit('terminate_','terminate_ happened');
-	});
+    socket.emit('terminate_','terminate_ happened');
+  });
 });
 
 
