@@ -1,26 +1,69 @@
 from pySOT import *
 from pySOT_dict import pySOT_class_dict
+from poap.strategy import *
+from poap.controller import *
 
-class pySOT_obj:
-	def __init__(self, parsed_json, class_dict = None):
-		self.parsed_json = parsed_json
-
-		if class_dict is None:
+class controller_obj:
+	def __init__(self, parsed_json, pySOTObj, feval_callbacks = None, class_dict = None):
+		if class_dict == None:
 			obj = pySOT_class_dict()
 			self.class_dict = obj.get_dict()
-			while 1:
-				pass
 		else:
 			self.class_dict = class_dict
+		
+		self.feval_callbacks = feval_callbacks
+		self.parsed_json = parsed_json
+		self.pySOTObj = pySOTObj
+		self.stratagy = self.init_stratagy(parsed_json['strategy'])
+		self.controller = self.init_controller(parsed_json['controller'])
 
+	def init_controller(self, parsed_json):
+		print(parsed_json['function'])
+		print('hffhf')
+		if parsed_json['function'] == 'SerialController':
+			controller = SerialController(pySOTObj['data'].objfunction)
+		else:
+			controller = ThreadController()
 
-		self.data = 0
-		self.exp_des = 0
-		self.surrogate = 0
-		self.adapt_samp = 0
-		self.maxp = 0
-		self.sucess = True
-		self.fail_msg = 'none'
+	def init_stratagy(self, parsed_json):
+		nsamples = parsed_json['nsamples']
+
+		print(' ')
+		print('hrere')
+		print(self.class_dict['strategy'])
+
+		if parsed_json['function'] in self.class_dict['strategy']:
+			arguments = { 'worker_id' : 0 }
+			for c in self.class_dict['strategy'][ parsed_json['function'] ][ 1 ]:
+				if c in parsed_json:
+					arguments[c] = parsed_json[c]
+			
+			for c in self.class_dict['strategy'][ parsed_json['function'] ][ 1 ]:
+				if c in self.pySOTObj:
+					arguments[c] = self.pySOTObj[c]
+			
+			# print(' ')
+			# print(parsed_json['function'])
+			# print(' ')
+			# print(self.class_dict['strategy'])
+			# print(' ')
+			# print(self.pySOTObj)
+			# print(' ')
+			# print(self.class_dict['strategy'][ parsed_json['function'] ][ 1 ])
+			# print(' ')
+			# print(arguments)
+			# print(self.class_dict['strategy'][ parsed_json['function'] ][ 0 ])
+			# print('somthing somthing')
+			# while 1:
+			# 	pass
+			return [ True, self.class_dict['strategy'][ parsed_json['function'] ][ 0 ](**arguments) ]
+		return [False, 'strategy not found']
+
+		# strategy = SyncStrategyNoConstraints(
+#         worker_id=0, data=data, maxeval=maxeval, nsamples=1,
+#         exp_design=exp_des, response_surface=surrogate,
+#         sampling_method=adapt_samp)
+# controller.strategy = strategy
 
 	def run(self):
 		print('Starting long haul\n\n\n')
@@ -80,12 +123,7 @@ class pySOT_obj:
 		return self.sucess, 'Good to GO'
 
 	def return_values(self):		
-		return { 'data' : self.data,
-				 'maxeval' : self.maxeval,
-				 'exp_design' : self.exp_des,
-				 'response_surface' : self.surrogate,
-				 'sampling_method' : self.adapt_samp}
-		#return [self.data, self.exp_des, self.surrogate, self.adapt_samp, self.maxeval]
+		return [self.data, self.exp_des, self.surrogate, self.adapt_samp, self.maxeval]
 
 	def get_optimization_problem(self, parsed_json):
 		if parsed_json['function'] in self.class_dict['optimization_problem']:

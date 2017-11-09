@@ -17,7 +17,6 @@ $(document).ready(function() {
   socket.on('connect', function() {
     socket.send('User has connected!');
     socket.emit('this_event','this happened');
-    socket.emit('haha','this happened');
   });
   socket.on('zaza',function(msg){
     var htmltxt = $(msg)
