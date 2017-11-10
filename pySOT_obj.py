@@ -88,7 +88,7 @@ class pySOT_obj:
 	def get_optimization_problem(self, parsed_json):
 		if parsed_json['function'] in self.class_dict['optimization_problem']:
 			arguments = {}
-			for c in self.class_dict['optimization_problem'][ parsed_json['function'] ][ 1 ]:
+			for c in self.class_dict['optimization_problem'][ parsed_json['function'] ][ 0 ]:
 				if c in parsed_json:
 					arguments[c] = parsed_json[c]
 			#return [ True, self.class_dict['optimization_problem'][ parsed_json['function'] ][ 0 ](**arguments) ]
@@ -102,7 +102,7 @@ class pySOT_obj:
 
 		if parsed_json['function'] in self.class_dict['adaptive_sampling']:
 			arguments = {'data' : self.data}
-			for c in self.class_dict['adaptive_sampling'][ parsed_json['function'] ][ 1 ]:
+			for c in self.class_dict['adaptive_sampling'][ parsed_json['function'] ][ 0 ]:
 				if c in parsed_json:
 					arguments[c] = parsed_json[c]
 			#return [ True, self.class_dict['adaptive_sampling'][ parsed_json['function'] ][ 0 ](**arguments) ]
@@ -116,8 +116,8 @@ class pySOT_obj:
 
 		if parsed_json['function'] in self.class_dict['surrogate_model']:
 			arguments = {}
-			print(self.class_dict['surrogate_model'][ parsed_json['function'] ][1])
-			for c in self.class_dict['surrogate_model'][ parsed_json['function'] ][ 1 ]:
+			print(self.class_dict['surrogate_model'][ parsed_json['function'] ][0])
+			for c in self.class_dict['surrogate_model'][ parsed_json['function'] ][ 0 ]:
 				print(c)
 				if c in parsed_json:
 					print(c)
@@ -138,7 +138,7 @@ class pySOT_obj:
 
 		if parsed_json['function'] in self.class_dict['experimental_design']:
 			arguments = {}
-			for c in self.class_dict['experimental_design'][ parsed_json['function'] ][ 1 ]:
+			for c in self.class_dict['experimental_design'][ parsed_json['function'] ][ 0 ]:
 				if c in parsed_json:
 					arguments[c] = parsed_json[c]
 			print(arguments)

@@ -32,35 +32,38 @@ class controller_obj:
 				self.msg = 'Could not initilize Controller'
 
 	def init_controller(self, parsed_json):
-		# if parsed_json['function'] in self.class_dict['controller']:
-		# 	arguments = {}
-		# 	for c in self.class_dict['controller'][ parsed_json['function'] ][ 1 ]:
-		# 		if c in parsed_json:
-		# 			arguments[c] = parsed_json[c]
-		# 		elif c == 'objective':
-		# 			arguments[c] = self.pySOTObj['data'].objfunction
-		# 	print(arguments)
-		# 	print(self.class_dict['adaptive_sampling'][ parsed_json['function'] ][ 0 ])
-		# 	return [ True, self.class_dict['adaptive_sampling'][ parsed_json['function'] ][ 0 ](**arguments) ]
-		# return [False, 'adaptive sampling not found']
+		if parsed_json['function'] in self.class_dict['controller']:
+			arguments = {}
+			for c in self.class_dict['controller'][ parsed_json['function'] ][ 0 ]:
+				if c in parsed_json:
+					arguments[c] = parsed_json[c]
+				elif c == 'objective':
+					arguments[c] = self.pySOTObj['data'].objfunction
+			print(arguments)
+			print(eval (parsed_json['function'] ))
+			controller = eval( parsed_json['function'] ) (**arguments) 
+			controller.strategy = self.stratagy
+			controller.feval_callbacks = self.feval_callbacks
+			return controller
+		return 'controller not found'
 
 
 
-		print(parsed_json['function'])
-		print('hffhf')
-		if parsed_json['function'] == 'SerialController':
-			controller = SerialController(self.pySOTObj['data'].objfunction)
-		else:
-			controller = ThreadController()
+		# print(parsed_json['function'])
+		# print('hffhf')
+		# if parsed_json['function'] == 'SerialController':
+		# 	controller = SerialController(self.pySOTObj['data'].objfunction)
+		# else:
+		# 	controller = ThreadController()
 
-		controller.strategy = self.stratagy
-		controller.feval_callbacks = self.feval_callbacks
-		print(self.class_dict['controller'])
-		# while 1:
-		# 	pass
-		return controller 
-		return [ True, self.class_dict['strategy'][ parsed_json['function'] ][ 0 ](**arguments) ]
-		return [ False, 'controller not found' ]
+		# controller.strategy = self.stratagy
+		# controller.feval_callbacks = self.feval_callbacks
+		# print(self.class_dict['controller'])
+		# # while 1:
+		# # 	pass
+		# return controller 
+		# return [ True, self.class_dict['strategy'][ parsed_json['function'] ][ 0 ](**arguments) ]
+		# return [ False, 'controller not found' ]
 
 
 
@@ -80,11 +83,14 @@ class controller_obj:
 
 		if parsed_json['function'] in self.class_dict['strategy']:
 			arguments = { 'worker_id' : 0 }
-			for c in self.class_dict['strategy'][ parsed_json['function'] ][ 1 ]:
+			for c in self.class_dict['strategy'][ parsed_json['function'] ][ 0 ]:
 				if c in parsed_json:
-					arguments[c] = parsed_json[c]
-			
-			for c in self.class_dict['strategy'][ parsed_json['function'] ][ 1 ]:
+					if c == 'proj_fun':
+						arguments[c] = eval(parsed_json[c])
+					else: 
+						arguments[c] = parsed_json[c]
+
+			for c in self.class_dict['strategy'][ parsed_json['function'] ][ 0 ]:
 				if c in self.pySOTObj:
 					arguments[c] = self.pySOTObj[c]
 			
@@ -102,7 +108,7 @@ class controller_obj:
 			# print('somthing somthing')
 			# while 1:
 			# 	pass
-			return self.class_dict['strategy'][ parsed_json['function'] ][ 0 ](**arguments)
+			return eval( parsed_json['function'] ) (**arguments)
 		return 'strategy not found'
 
 		# strategy = SyncStrategyNoConstraints(

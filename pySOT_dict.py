@@ -5,7 +5,6 @@ import projection_fun
 import delay_fun
 
 
-
 class pySOT_class_dict():
 	def __init__(self):
 		self.flag = True
@@ -108,6 +107,7 @@ class pySOT_class_dict():
 		mod_name = kernels 			# Enter Module name here only one at a time SORRY!!!!
 		#self.kernel_dict = self.get_class_names(mod_name, mod_name.__name__)
 		self.kernel_dict = self.obj.get_class_names(mod_name, mod_name.__name__)
+		self.kernel_dict = list(self.kernel_dict)
 
 		## To add a custom kerel 
 		## self.kernel_dict[' kerel_name '] = kernel_object
@@ -115,7 +115,7 @@ class pySOT_class_dict():
 	def tail_generate_dict(self):
 		mod_name = tails 			# Enter Module name here only one at a time SORRY!!!!
 		self.tail_dict = self.obj.get_class_names(mod_name, mod_name.__name__)
-		
+		self.tail_dict = list(self.tail_dict)
 		## To add a custom tail
 		## self.tail_dict[ 'tail_name' ] = tail_object
 
@@ -124,6 +124,10 @@ class pySOT_class_dict():
 		self.optimization_problem_dict = self.obj.get_class_names(mod_name, mod_name.__name__)
 		for i in self.optimization_problem_dict:
 			self.optimization_problem_dict[i] = self.obj.get_arguments_and_default_values(self.optimization_problem_dict[i])
+
+		print(' ')
+		print(self.optimization_problem_dict)
+
 		
 		## To add a custom optimization problem
 		## self.optimization_problem_dict[ 'optimization_problem_name' ] = [optimization_problem_object, [argument_string_list], [defaults_list]]

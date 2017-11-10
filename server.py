@@ -70,7 +70,7 @@ def get_arguments_for_stratagy(parsed_json):
 
 @socketio.on('run')
 def onMsgRun(msg):
-    msg = '{ "optimization_problem" : {"function" : "Ackley" , "dim" : 10} , "experimental_design" : { "function" : "SymmetricLatinHypercube" , "dim" : 10, "npts" : 21 } , "surrogate_model" : { "function" : "RBFInterpolant" , "maxp" : 500 , "tail" : "LinearTail" , "kernel" : "CubicKernel" } , "adaptive_sampling" : { "function" : "CandidateDYCORS" , "numcand" : 100 , "weights" : -1 } , "controller" : { "function" : "SerialController" } , "strategy" : { "function" : "SyncStrategyNoConstraints" , "nsamples" : 1 } }';
+    msg = '{ "optimization_problem" : {"function" : "Ackley" , "dim" : 10} , "experimental_design" : { "function" : "SymmetricLatinHypercube" , "dim" : 10, "npts" : 21 } , "surrogate_model" : { "function" : "RBFInterpolant" , "maxp" : 500 , "tail" : "LinearTail" , "kernel" : "CubicKernel" } , "adaptive_sampling" : { "function" : "CandidateDYCORS" , "numcand" : 100 , "weights" : -1 } , "controller" : { "function" : "SerialController" } , "strategy" : { "function" : "SyncStrategyNoConstraints" , "nsamples" : 1 , "proj_fun" : "projection" } }';
 
     print(msg)
     parsed_json = json.loads( msg )
@@ -90,7 +90,9 @@ def onMsgRun(msg):
 
     new_obj = pySOT_obj(parsed_json, class_dict)
     [sucess, msg] = new_obj.run()
+    print('goof here')
     if not sucess:
+        print('not good')
         print(msg+'\n\n\n')
         emit('error_msg', msg)
         return
@@ -105,11 +107,13 @@ def onMsgRun(msg):
     #     controller = SerialController(pySOTObj['data'].objfunction)
     # else:
     #     controller = ThreadController()
-
+    print('controller start')
     new_controller = controller_obj(parsed_json, pySOTObj, [checkering,], class_dict)
+    print('controller init')
     [sucess, controller] = new_controller.get_controller()
+    print('controller done')
     if not sucess:
-        print(msg+'\n\n\n')
+        print(controller+'\n\n\n')
         emit('error_msg', controller)
         return
 
