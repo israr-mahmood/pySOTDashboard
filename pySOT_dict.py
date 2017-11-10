@@ -1,9 +1,14 @@
 from pySOT import *
-from mod_scraper import get_mod_class
 from poap import controller
+from mod_scraper import get_mod_class
+import projection_fun
+import delay_fun
+
+
 
 class pySOT_class_dict():
 	def __init__(self):
+		self.flag = True
 		self.kernel_dict = {}
 		self.tail_dict = {}
 		self.optimization_problem_dict = {}
@@ -12,21 +17,93 @@ class pySOT_class_dict():
 		self.adaptive_sampling_dict = {}
 		self.strategy_dict = {}
 		self.controller_dict = {}
+		self.projection_dict = {}
+		self.delay_dict = {}
 
 		self.obj = get_mod_class()
 
 		self.generate_dict()
 
 	def generate_dict(self):
-		self.kerel_generate_dict()
-		self.tail_generate_dict()
-		self.optimization_problem_generate_dict()
-		self.experimental_design_generate_dict()
-		self.surrogate_model_generate_dict()
-		self.adaptive_sampling_generate_dict()
-		self.strategy_generate_dict()
-		self.controller_generate_dict()
+		try:
+			self.kerel_generate_dict()
+		except: 
+			self.flag = False
+			self.msg = 'Could not find kernel Module'
+			return
+		try:
+			self.tail_generate_dict()
+		except: 
+			self.flag = False
+			self.msg = 'Could not find tail Module'
+			return
+		try:
+			self.optimization_problem_generate_dict()
+		except: 
+			self.flag = False
+			self.msg = 'Could not find optimization problem Module'
+			return
+		try:
+			self.experimental_design_generate_dict()
+		except: 
+			self.flag = False
+			self.msg = 'Could not find experimental design Module'
+			return
+		try:
+			self.surrogate_model_generate_dict()
+		except: 
+			self.flag = False
+			self.msg = 'Could not find surrogate model Module'
+			return
+		try:
+			self.adaptive_sampling_generate_dict()
+		except: 
+			self.flag = False
+			self.msg = 'Could not find adaptive sampling Module'
+			return
+		try:
+			self.strategy_generate_dict()
+		except: 
+			self.flag = False
+			self.msg = 'Could not find strategy Module'
+			return
+		try:
+			self.controller_generate_dict()
+		except: 
+			self.flag = False
+			self.msg = 'Could not find controller Module'
+			return
+		print('proj here')
+		try:
+			print('good 0')
+			self.projection_generate_dict()
+			print('good')
+		except: 
+			self.flag = False
+			self.msg = 'Could not find projection_fun Module'
+			print('bad')
+			return
+		print('delay here')
+		try:
+			self.delay_generate_dict()
+		except: 
+			self.flag = False
+			self.msg = 'Could not find delay_fun Module'
+			return
 
+
+	def projection_generate_dict(self):
+		mod_name = projection_fun 			# Enter Module name here only one at a time SORRY!!!!
+		self.projection_dict = self.obj.get_fun_names(mod_name, mod_name.__name__)
+
+		## To add a custom projection function go to projection_fun.py 
+
+	def delay_generate_dict(self):
+		mod_name = delay_fun 			# Enter Module name here only one at a time SORRY!!!!
+		self.delay_dict = self.obj.get_fun_names(mod_name, mod_name.__name__)
+
+		## To add a custom projection function go to delay_fun.py
+		
 	def kerel_generate_dict(self):
 		mod_name = kernels 			# Enter Module name here only one at a time SORRY!!!!
 		#self.kernel_dict = self.get_class_names(mod_name, mod_name.__name__)
@@ -114,19 +191,21 @@ class pySOT_class_dict():
 		print('why zis happed')
 
 		print(self.controller_dict)
-		while 1:
-			pass
 
 		## To add a custom controller
 		## self.controller_dict[ 'controller_name' ] = [controller_object, [argument_string_list], [defaults_list]]
 
 	def get_dict(self):
-		return { 'kernel': self.kernel_dict, 
-				 'tail' : self.tail_dict, 
-				 'optimization_problem' : self.optimization_problem_dict, 
-				 'experimental_design' : self.experimental_design_dict, 
-				 'surrogate_model' : self.surrogate_model_dict , 
-				 'adaptive_sampling' : self.adaptive_sampling_dict,
-				 'strategy' : self.strategy_dict,
-				 'controller' : self.controller_dict}
-
+		if self.flag:
+			return self.flag, {  'kernel': self.kernel_dict, 
+								 'tail' : self.tail_dict, 
+								 'optimization_problem' : self.optimization_problem_dict, 
+								 'experimental_design' : self.experimental_design_dict, 
+								 'surrogate_model' : self.surrogate_model_dict , 
+								 'adaptive_sampling' : self.adaptive_sampling_dict,
+								 'strategy' : self.strategy_dict,
+								 'controller' : self.controller_dict,
+								 'delay' : self.delay_dict,
+								 'proj_fun' : self.projection_dict}
+		else:
+			return self.flag, self.msg

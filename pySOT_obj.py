@@ -8,8 +8,6 @@ class pySOT_obj:
 		if class_dict is None:
 			obj = pySOT_class_dict()
 			self.class_dict = obj.get_dict()
-			while 1:
-				pass
 		else:
 			self.class_dict = class_dict
 
@@ -93,7 +91,8 @@ class pySOT_obj:
 			for c in self.class_dict['optimization_problem'][ parsed_json['function'] ][ 1 ]:
 				if c in parsed_json:
 					arguments[c] = parsed_json[c]
-			return [ True, self.class_dict['optimization_problem'][ parsed_json['function'] ][ 0 ](**arguments) ]
+			#return [ True, self.class_dict['optimization_problem'][ parsed_json['function'] ][ 0 ](**arguments) ]
+			return [ True, eval(parsed_json['function']) (**arguments) ]
 		return [False, 'optimization problem not found']
 
 	def get_adaptive_sampling(self, parsed_json):
@@ -106,9 +105,8 @@ class pySOT_obj:
 			for c in self.class_dict['adaptive_sampling'][ parsed_json['function'] ][ 1 ]:
 				if c in parsed_json:
 					arguments[c] = parsed_json[c]
-			print(arguments)
-			print(self.class_dict['adaptive_sampling'][ parsed_json['function'] ][ 0 ])
-			return [ True, self.class_dict['adaptive_sampling'][ parsed_json['function'] ][ 0 ](**arguments) ]
+			#return [ True, self.class_dict['adaptive_sampling'][ parsed_json['function'] ][ 0 ](**arguments) ]
+			return [ True, eval( parsed_json['function'] ) (**arguments) ]
 		return [False, 'adaptive sampling not found']
 
 	def get_surrogate_model(self, parsed_json):
@@ -124,13 +122,16 @@ class pySOT_obj:
 				if c in parsed_json:
 					print(c)
 					if c == 'kernel':
-						arguments[c] = self.class_dict['kernel'][ parsed_json[c] ]
+						#arguments[c] = self.class_dict['kernel'][ parsed_json[c] ]
+						arguments[c] = eval( parsed_json[c] )
 					elif c == 'tail':
-						arguments[c] = self.class_dict['tail'][ parsed_json[c] ]
+						#arguments[c] = self.class_dict['tail'][ parsed_json[c] ]
+						arguments[c] = eval( parsed_json[c] )
 					else:
 						arguments[c] = parsed_json[c]
 
-			return [ True, self.class_dict['surrogate_model'][ parsed_json['function'] ][ 0 ](**arguments) ]
+			#return [ True, self.class_dict['surrogate_model'][ parsed_json['function'] ][ 0 ](**arguments) ]
+			return [ True, eval( parsed_json['function'] ) (**arguments) ]
 		return [False, 'surrogate model not found']
 
 	def get_experimental_design(self, parsed_json, dim):
@@ -141,5 +142,6 @@ class pySOT_obj:
 				if c in parsed_json:
 					arguments[c] = parsed_json[c]
 			print(arguments)
-			return [ True, self.class_dict['experimental_design'][ parsed_json['function'] ][ 0 ](**arguments) ]
+			#return [ True, self.class_dict['experimental_design'][ parsed_json['function'] ][ 0 ](**arguments) ]
+			return [ True, eval( parsed_json['function'] ) (**arguments) ]
 		return [False, 'experimental design not found']

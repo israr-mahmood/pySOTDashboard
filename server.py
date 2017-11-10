@@ -44,6 +44,9 @@ def get_arguments_for_stratagy(parsed_json):
 
     new_dict_obj = pySOT_class_dict()
     class_dict = new_dict_obj.get_dict()
+    if class_dict == -1:
+        emit('error_msg', 'Could not find dependencies')
+        return
 
     new_obj = pySOT_obj(parsed_json, class_dict)
     [sucess, msg] = new_obj.run()
@@ -78,7 +81,11 @@ def onMsgRun(msg):
 
     #from obj_make import pySOT_obj, pySOT_class_dict
     new_dict = pySOT_class_dict()
-    class_dict = new_dict.get_dict()
+    [sucess, class_dict] = new_dict.get_dict()
+    if not sucess:
+        print(msg+'\n\n\n')
+        emit('error_msg', class_dict)
+        return
     print('got out of dict')
 
     new_obj = pySOT_obj(parsed_json, class_dict)
@@ -88,21 +95,25 @@ def onMsgRun(msg):
         emit('error_msg', msg)
         return
     print('done obj')
-    #[data, exp_des, surrogate, adapt_samp, maxeval] = new_obj.return_values()
     pySOTObj = new_obj.return_values()
 
     print(pySOTObj['data'].info)
 
     # This point onwards
 
-    if parsed_json["controller"]["function"] == "SerialController":
-        controller = SerialController(pySOTObj['data'].objfunction)
-    else:
-        controller = ThreadController()
+    # if parsed_json["controller"]["function"] == "SerialController":
+    #     controller = SerialController(pySOTObj['data'].objfunction)
+    # else:
+    #     controller = ThreadController()
 
     new_controller = controller_obj(parsed_json, pySOTObj, [checkering,], class_dict)
+    [sucess, controller] = new_controller.get_controller()
+    if not sucess:
+        print(msg+'\n\n\n')
+        emit('error_msg', controller)
+        return
 
-    nsamples = parsed_json["controller"]["nsamples"]
+    #nsamples = parsed_json["strategy"]["nsamples"]
 
 #     # (5) Use the sychronous strategy without non-bound constraints
 # strategy = SyncStrategyNoConstraints(
@@ -152,14 +163,14 @@ def onMsgRun(msg):
 
 
     # controller = SerialController(data.objfunction)
-    print('got to this point')
-    # (5) Use the sychronous strategy without non-bound constraints
-    strategy = SyncStrategyNoConstraints(
-            worker_id=0, data=pySOTObj['data'], maxeval=pySOTObj['maxeval'], nsamples=nsamples,
-            exp_design=pySOTObj['exp_des'], response_surface=pySOTObj['surrogate'],
-            sampling_method=pySOTObj['adapt_samp'])
-    controller.strategy = strategy
-    controller.feval_callbacks = [checkering,]
+    # print('got to this point')
+    # # (5) Use the sychronous strategy without non-bound constraints
+    # strategy = SyncStrategyNoConstraints(
+    #         worker_id=0, data=pySOTObj['data'], maxeval=pySOTObj['maxeval'], nsamples=nsamples,
+    #         exp_design=pySOTObj['exp_design'], response_surface=pySOTObj['response_surface'],
+    #         sampling_method=pySOTObj['sampling_method'])
+    # controller.strategy = strategy
+    # controller.feval_callbacks = [checkering,]
 
     # Run the optimization strategy
     result = controller.run()
@@ -185,6 +196,11 @@ def onMsgRun(msg):
         .info)
     plt.show()
 
+    print('ch shu')
+    print(class_dict)
+
+    print(' ')
+    print(json.dumps(class_dict))
 
     #hiding_this_in_a_function(data, exp_des, surrogate, adapt_samp, parsed_json['surrogate_model']['maxp'])
 

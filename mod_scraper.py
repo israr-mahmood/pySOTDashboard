@@ -1,4 +1,4 @@
-from inspect import getmembers, isclass, getargspec, isroutine
+from inspect import getmembers, isclass, getargspec, isroutine, isfunction
 
 class get_mod_class():
 	def get_class_names(self, mod_name, mod_name_str):
@@ -7,3 +7,7 @@ class get_mod_class():
 
 	def get_arguments_and_default_values(self, val):
 		return [ val, getargspec(val.__init__).args[1:], getargspec(val.__init__).defaults ]
+
+	def get_fun_names(self, mod_name, mod_name_str):
+		res = [tup for tup in getmembers(mod_name) if isfunction(tup[1])]
+		return  ([ tup[0] for tup in res if dict( getmembers(tup[1], lambda a:not(isroutine(a))) ) ['__module__'] == mod_name_str ])
