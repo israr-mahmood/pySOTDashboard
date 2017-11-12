@@ -25,6 +25,11 @@ $(document).ready(function() {
     $('#log').append('<br>' + msg);
     console.log('Received message');
   });
+  socket.on('abc', function(msg) {
+    $("#messages").append('<li>'+msg+'</li>');
+    $('#log').append('<br>' + msg);
+    console.log('Received message');
+  });
   $('#sendbutton').on('click', function() {
     socket.send($('#myMessage').val());
     $('#myMessage').val('');
