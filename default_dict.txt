@@ -1,6 +1,9 @@
+ Client Input
+
  {
  'experimental_design': 
- {'BoxBehnken': [['dim'], 'None'], 'TwoFactorial': [['dim'], 'None'], 
+ {'BoxBehnken': [['dim'], 'None'], 
+ 'TwoFactorial': [['dim'], 'None'], 
  'LatinHypercube': [['dim', 'npts', 'criterion'], ['c']], 
  'SymmetricLatinHypercube': [['dim', 'npts'], 'None']}, 
 
@@ -62,3 +65,20 @@
  {'SyncStrategyNoConstraints': [['worker_id', 'data', 'response_surface', 'maxeval', 'nsamples', 'exp_design', 'sampling_method', 'extra', 'extra_vals'], ['None', 'None', 'None', 'None']], 
  'SyncStrategyPenalty': [['worker_id', 'data', 'response_surface', 'maxeval', 'nsamples', 'exp_design', 'sampling_method', 'extra', 'penalty'], ['None', 'None', 'None', 1000000.0]], 
  'SyncStrategyProjection': [['worker_id', 'data', 'response_surface', 'maxeval', 'nsamples', 'exp_design', 'sampling_method', 'extra', 'proj_fun'], ['None', 'None', 'None', 'None']]}}
+
+
+Client Output
+
+{ "optimization_problem" : 
+{"function" : "Ackley" , "dim" : 10} , 
+
+"experimental_design" : 
+{ "function" : "SymmetricLatinHypercube" , "dim" : 10, "npts" : 21 } , 
+
+"surrogate_model" : { "function" : "RBFInterpolant" , "maxp" : 500 , "tail" : "LinearTail" , "kernel" : "CubicKernel" } , 
+
+"adaptive_sampling" : { "function" : "CandidateDYCORS" , "numcand" : 100 , "weights" : -1 } , 
+
+"controller" : { "function" : "SerialController" } , 
+
+"strategy" : { "function" : "SyncStrategyNoConstraints" , "nsamples" : 1 , "proj_fun" : "projection" } }';
