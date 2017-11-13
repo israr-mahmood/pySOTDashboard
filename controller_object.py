@@ -80,7 +80,7 @@ class controller_obj:
 			#controller.add_term_callback(self.feval_callbacks)
 			#self.monitor = Monitor(controller)
 			#self.monitor.on_complete = this_fun
-			self.monitor = MonitorSubClass(controller, this_fun)
+			#self.monitor = MonitorSubClass(controller, this_fun)
 			#self.monitor.on_complete = on_complete#self.feval_callbacks
 			return controller
 		return 'controller not found'

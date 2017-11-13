@@ -49,7 +49,7 @@ def make_correction_to_data (parsed_json):
         parsed_json['adaptive_sampling']['weights'] = None
 
 @socketio.on('get_dict')
-def sendingDict():
+def sendingDict(msg):
     emit('recv_dict', json.dumps(class_dict))
 
 @socketio.on('run')
