@@ -16,9 +16,11 @@ import numpy as np
 from pySOT_obj import pySOT_obj
 from mod_scraper import get_mod_class
 from pySOT_dict import pySOT_class_dict
-from controller_obj import controller_obj
+from controller_object import controller_obj
 
 from time import sleep
+
+import sys, traceback
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
@@ -26,20 +28,29 @@ socketio = SocketIO(app)
 
 
 def checkering(msg):
-    print('---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------')
-    print(str(msg))
-    print(msg.params)
-    print(msg._status)
+    print('----------------------------------------------------------------------------------')
+    #print(str(msg))
+    #print(msg.params)
+    #print(msg._status)
+    #traceback.print_tb(sys.exc_info(),limit=1,file=sys.stdout)
     print(msg.value)
-    print(msg.status)
+    #print(msg.status)
     if msg.status != 'pending':
         while 1:
+            pass
+    if msg.value:
+        while 1:
+            print('val found')
             pass
     return 1
 
 def make_correction_to_data (parsed_json):
     if parsed_json['adaptive_sampling']['weights'] == -1:
         parsed_json['adaptive_sampling']['weights'] = None
+
+@socketio.on('get_dict')
+def sendingDict():
+    emit('recv_dict', json.dumps(class_dict))
 
 @socketio.on('run')
 def onMsgRun(msg):
@@ -53,7 +64,7 @@ def onMsgRun(msg):
     print(parsed_json)
 
     #from obj_make import pySOT_obj, pySOT_class_dict
-    new_dict = pySOT_class_dict()
+    
     [sucess, class_dict] = new_dict.get_dict()
     if not sucess:
         print(msg+'\n\n\n')
@@ -99,13 +110,16 @@ def onMsgRun(msg):
     fvals = np.array([o.value for o in controller.fevals])
 
     f, ax = plt.subplots()
-    ax.plot(np.arange(0,pySOTObj['maxeval']), fvals, 'bo')  # Points
-    ax.plot(np.arange(0,pySOTObj['maxeval']), np.minimum.accumulate(fvals), 'r-', linewidth=4.0)  # Best value found
-    plt.xlabel('Evaluations')
-    plt.ylabel('Function Value')
-    plt.title(pySOTObj['data']
-        .info)
-    plt.show()
+    print(np.arange(0,pySOTObj['maxeval']))
+    print(fvals)
+
+    # ax.plot(np.arange(0,pySOTObj['maxeval']), fvals, 'bo')  # Points
+    # ax.plot(np.arange(0,pySOTObj['maxeval']), np.minimum.accumulate(fvals), 'r-', linewidth=4.0)  # Best value found
+    # plt.xlabel('Evaluations')
+    # plt.ylabel('Function Value')
+    # plt.title(pySOTObj['data']
+    #     .info)
+    # plt.show()
 
     print('ch shu')
     print(class_dict)
@@ -129,7 +143,7 @@ def handleMessage(msg):
     while i<10:
         print('the happeing ' + str(i))
         i+=1
-        sleep(1)
+        #sleep(1)
 
 if __name__ == '__main__':
     import sys
@@ -137,6 +151,9 @@ if __name__ == '__main__':
 
     log.startLogging(sys.stdout)
     import logging
+
+    global new_dict
+    new_dict = pySOT_class_dict()
 
     logging.basicConfig(level=logging.DEBUG)
     socketio.run(app, debug=True)
