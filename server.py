@@ -22,7 +22,8 @@ import numpy as np
 
 
 
-
+from scatter import scatter
+from optval import optval
 
 
 app = Flask(__name__)
@@ -105,8 +106,28 @@ def hiding_this_in_a_function(data, exp_des, surrogate, adapt_samp, maxeval):
 
 @socketio.on('run')
 def onMsgRun(msg):
+
+
+    # init an array 
+    optArr = optval()
+    optArr.addData([1,2,3,4,5])
+    script, div = optArr.plotArr()
+    emit('appendgraphdiv', div)
+    emit('appendgraphscript', script)
+
+
+    # graph = scatter()
+    # script, div = graph.run()
+    # emit('appendgraphdiv', div)
+    # emit('appendgraphscript', script)
+
+
+
+    return
+
     print(msg)
-    parsed_json = json.loads( msg )
+
+    parsed_json = json.loads(msg)
 
     from optimization_problems import optimization_problems
     OP_fun = optimization_problems( parsed_json['optimization_problem'] )
@@ -132,6 +153,8 @@ def onMsgRun(msg):
     if not sucess:
         emit('error_msg', adapt_samp)
         return
+
+
 
     hiding_this_in_a_function(data, exp_des, surrogate, adapt_samp, parsed_json['surrogate_model']['maxeval'])
 
@@ -243,10 +266,22 @@ def onMsgTerminate(msg):
 
 
 
-@socketio.on('message')
+@socketio.on('message')  ####
 def handleMessage(msg):
     print('Message: ' + msg)
     send(msg, broadcast=True)
+
+
+
+##import variables
+@socketio.on('displaygraph')  ####
+def handleDisplayGraph(msg):
+    emit('graphtoshow', 'i am here')
+
+
+
+
+
 
 @socketio.on('this_event')
 def handleMessage(msg):

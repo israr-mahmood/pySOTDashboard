@@ -5,9 +5,72 @@
 <title>Chat Room</title>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
 <body>
+
+<div id="sidebar">
+  <ul>
+    <li><a href="optprob.html">Optimization Problem</a></li>
+    <li><a href="surmodel.html">Surrogate Model</a></li>
+    <li><a href="expdesign.html">Experimental Design</a></li>
+    <li><a href="adaptsample.html">Adaptive Sampling</a></li>
+    <li><a href="#">Index Page</a></li>
+  </ul>
+  
+
+  <div id="sidebar-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> 
+<script>
+  $(document).ready(function(){
+    $('#sidebar-btn').click(function(){
+      $('#sidebar').toggleClass('visible');
+      $('#buttons').toggleClass('visible');
+
+
+      // add sth here
+    });
+  });
+
+</script>
+
+
+
+
+<div id="buttons">
+  <form id='connect' action='#'>
+      <input type="text" id="myMessage">
+  </form>
+  <button id="sendbutton">Send</button>
+
+  <button id='clear_log'>Clear log</button>
+  <button id='run'>Run</button>
+  <button id='terminate'>Terminate</button> 
+
+  <h2>Receive:</h2>
+  <div id="log"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
 $(document).ready(function() {
   var run_options = '{ "optimization_problem" : "Ackley" }';
@@ -142,19 +205,25 @@ $(document).ready(function() {
 
 
 </script>
-<form id='connect' action='#'>
+
+
+<!-- <form id='connect' action='#'>
       <input type="text" id="myMessage">
-</form>
+</form> -->
 
-<button id="sendbutton">Send</button>
+<!-- 
+<div id="buttons" class="visible">
 
-<button id='clear_log'>Clear log</button>
-<button id='run'>Run</button>
-<button id='terminate'>Terminate</button> 
+  <button id="sendbutton">Send</button>
 
-<h2>Receive:</h2>
-<div id="log"></div>
+  <button id='clear_log'>Clear log</button>
+  <button id='run'>Run</button>
+  <button id='terminate'>Terminate</button> 
 
+  <h2>Receive:</h2>
+  <div id="log"></div>
+</div>
+ -->
 </body>
 
 </html>
