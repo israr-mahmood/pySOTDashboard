@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Chat Room</title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+</head>
+<body>
+<script type="text/javascript">
+$(document).ready(function() {
+  var run_options = '{ "optimization_problem" : {"function" : "Ackley" , "dim" : 10} , "experimental_design" : { "function" : "SymmetricLatinHypercube" , "samples" : 21 } , "surrogate_model" : { "function" : "RBFInterpolant" , "maxeval" : 500 , "tail" : "LinearTail" , "kernel" : "CubicKernel" } , "adaptive_sampling" : { "function" : "CandidateDYCORS" , "numcand" : 100 , "weights" : 1 } }';
+
+
+  var socket = io.connect('http://127.0.0.1:5000');
+  socket.on('connect', function() {
+    socket.send('User has connected!');
+    socket.emit('this_event','this happened');
+    socket.emit('haha','this happened');
+  });
+  socket.on('zaza',function(msg){
+    var htmltxt = $(msg)
+    $('#log').append(htmltxt);
+  });
+  socket.on('message', function(msg) {
+    $("#messages").append('<li>'+msg+'</li>');
+    $('#log').append('<br>' + msg);
+    console.log('Received message');
+  });
+  $('#sendbutton').on('click', function() {
+    socket.send($('#myMessage').val());
+    $('#myMessage').val('');
+  });
+  $('button#clear_log').click(function() {
+    $("#log").html("");
+  });
+  $('button#run').click(function() {
+    socket.emit('run',run_options);
+    //send({type: "run"});
+  });
+    $('button#terminate').click(function() {
+    socket.emit('terminate_','terminate_ happened');
+  });
+});
+
+
+
+
+
+
+
+
+/*
+      $(document).ready(function() {
+          var socket = null;
+          var isopen = false;
+
+          $('#connect_url').val("ws://127.0.0.1:9000");
+          function socket_setup() {
+              var url = $('#connect_url').val();
+              var socket = new WebSocket(url);
+              socket.binaryType = "arraybuffer";
+
+              socket.onopen = function() {
+                  console.log("Connected!");
+                  isopen = true;
+                  $('button#connect_button').html('Disconnect');
+              }
+
+              socket.onmessage = function(e) {
+                  if (typeof e.data == "string") {
+                      console.log("Text message received: " + e.data);
+                      log(e.data);
+                  } else {
+                      var arr = new Uint8Array(e.data);
+                      var hex = '';
+                      for (var i = 0; i < arr.length; i++) {
+                          hex += ('00' + arr[i].toString(16)).substr(-2);
+                      }
+                      console.log("Binary message received: " + hex);
+                      log("Binary message received: " + hex);
+                  }
+              }
+
+              socket.onclose = function(e) {
+                  console.log("Connection closed.");
+                  log("Connection closed.");
+                  socket = null;
+                  isopen = false;
+
+                  $('button#connect_button').html('Connect');                  
+              }
+              return socket;
+          }
+
+          function log(data) {
+              $('#log').append('<br>' + data);
+          }
+
+          function send(msg) {
+              if (isopen) {
+                  socket.send(JSON.stringify(msg));
+                  console.log("Sent " + msg.type);
+              } else {
+                  console.log("Connection not open.");
+              }
+          }
+
+          $('button#connect_button').click(function() {
+              if (isopen) {
+                  socket.close()
+                  console.log("Disconnected");
+                  log("Disconnected");
+              } else {
+                  socket = socket_setup();
+                  console.log("Connecting");
+                  log("Connecting");
+              }
+              console.log("Done click");
+          });
+
+          $('button#clear_log').click(function() {
+              $("#log").html("");
+          });
+
+          $('button#run').click(function() {
+              send({type: "run"});
+          });
+
+          $('button#terminate').click(function() {
+              send({type: "terminate"});
+          });
+
+          socket = socket_setup();
+      });
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+</script>
+<form id='connect' action='#'>
+      <input type="text" id="myMessage">
+</form>
+
+<button id="sendbutton">Send</button>
+
+<button id='clear_log'>Clear log</button>
+<button id='run'>Run</button>
+<button id='terminate'>Terminate</button> 
+
+<h2>Receive:</h2>
+<div id="log"></div>
+
+</body>
+
+</html>
+
+
+<!--
+
+
+  <head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+          var socket = null;
+          var isopen = false;
+
+          $('#connect_url').val("ws://127.0.0.1:9000");
+          function socket_setup() {
+              var url = $('#connect_url').val();
+              var socket = new WebSocket(url);
+              socket.binaryType = "arraybuffer";
+
+              socket.onopen = function() {
+                  console.log("Connected!");
+                  isopen = true;
+                  $('button#connect_button').html('Disconnect');
+              }
+
+              socket.onmessage = function(e) {
+                  if (typeof e.data == "string") {
+                      console.log("Text message received: " + e.data);
+                      log(e.data);
+                  } else {
+                      var arr = new Uint8Array(e.data);
+                      var hex = '';
+                      for (var i = 0; i < arr.length; i++) {
+                          hex += ('00' + arr[i].toString(16)).substr(-2);
+                      }
+                      console.log("Binary message received: " + hex);
+                      log("Binary message received: " + hex);
+                  }
+              }
+
+              socket.onclose = function(e) {
+                  console.log("Connection closed.");
+                  log("Connection closed.");
+                  socket = null;
+                  isopen = false;
+
+                  $('button#connect_button').html('Connect');                  
+              }
+              return socket;
+          }
+
+          function log(data) {
+              $('#log').append('<br>' + data);
+          }
+
+          function send(msg) {
+              if (isopen) {
+                  socket.send(JSON.stringify(msg));
+                  console.log("Sent " + msg.type);
+              } else {
+                  console.log("Connection not open.");
+              }
+          }
+
+          $('button#connect_button').click(function() {
+              if (isopen) {
+                  socket.close()
+                  console.log("Disconnected");
+                  log("Disconnected");
+              } else {
+                  socket = socket_setup();
+                  console.log("Connecting");
+                  log("Connecting");
+              }
+              console.log("Done click");
+          });
+
+          $('button#clear_log').click(function() {
+              $("#log").html("");
+          });
+
+          $('button#run').click(function() {
+              send({type: "run"});
+          });
+
+          $('button#terminate').click(function() {
+              send({type: "terminate"});
+          });
+
+          socket = socket_setup();
+      });
+    </script>
+
+  </head>
+
+
+
+-->
