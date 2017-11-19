@@ -7,7 +7,7 @@
 
 :Module: controller_object
 :Author: Israr Mahmood <im278@cornell.edu>
-
+ 
 """
 
 
@@ -29,7 +29,7 @@ class MonitorSubClass(Monitor):
 
 	:param controller: The controller object to be monitered
 	:type controller: controller
-
+ 
 	"""
 
 	def __init__(self, controller):
@@ -58,7 +58,7 @@ class ControllerObject:
 
 	:param input_argument: Parameters needed for setting up the controller and strategy
 	:type input_argument: dict
-	:param pySOTObj: Optimization Problem, Adaptive Sampling, Surrogate Model and Experimental Design objects
+	:param pySOT_Object: Optimization Problem, Adaptive Sampling, Surrogate Model and Experimental Design objects
 	:type pySOT_Object: dict
 	:param class_dict: Catogarised List of all classes in PySOT
 	:type class_dict: dict
