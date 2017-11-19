@@ -16,7 +16,7 @@ import numpy as np
 from pySOT_obj import pySOT_obj
 from mod_scraper import get_mod_class
 from pySOT_dict import pySOT_class_dict
-from controller_object import controller_obj
+from controller_object import ControllerObject
 
 from time import sleep
 
@@ -86,7 +86,7 @@ def onMsgRun(msg):
     print(pySOTObj['data'].info)
 
     print('controller start')
-    new_controller = controller_obj(parsed_json, pySOTObj, [checkering,], class_dict)
+    new_controller = ControllerObject(parsed_json, pySOTObj, class_dict)
     print('controller init')
     [sucess, controller] = new_controller.get_controller()
     print('controller done')
@@ -113,13 +113,13 @@ def onMsgRun(msg):
     print(np.arange(0,pySOTObj['maxeval']))
     print(fvals)
 
-    # ax.plot(np.arange(0,pySOTObj['maxeval']), fvals, 'bo')  # Points
-    # ax.plot(np.arange(0,pySOTObj['maxeval']), np.minimum.accumulate(fvals), 'r-', linewidth=4.0)  # Best value found
-    # plt.xlabel('Evaluations')
-    # plt.ylabel('Function Value')
-    # plt.title(pySOTObj['data']
-    #     .info)
-    # plt.show()
+    ax.plot(np.arange(0,pySOTObj['maxeval']), fvals, 'bo')  # Points
+    ax.plot(np.arange(0,pySOTObj['maxeval']), np.minimum.accumulate(fvals), 'r-', linewidth=4.0)  # Best value found
+    plt.xlabel('Evaluations')
+    plt.ylabel('Function Value')
+    plt.title(pySOTObj['data']
+        .info)
+    plt.show()
 
     print('ch shu')
     print(class_dict)
