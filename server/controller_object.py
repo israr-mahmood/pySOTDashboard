@@ -7,139 +7,175 @@
 
 :Module: controller_object
 :Author: Israr Mahmood <im278@cornell.edu>
- 
+
 """
 
-
-from pySOT import *
-from pySOT_dict import pySOT_class_dict
-from poap.strategy import *
+from flask_socketio import emit
 from poap.controller import *
-from flask_socketio import SocketIO, send, emit
+from poap.strategy import *
+from pySOT import *
+
+from pySOT_dictionary import PySOTDictionary
 
 
 class MonitorSubClass(Monitor):
-	"""Caputes and sends the values of each evaluation.
+    """Captures and sends the values of each evaluation.
 
-	MoniterSubClass inherits from the Monitor class. It hooks into the 
-	controller and moniters it's progress. everytime the controller registers 
-	a record completion event after appending the value of the current	
-	evaluation EvalRecord.value. The on_complete function is invoked, sending
-	the value of the lastest evaluation to the client.
+    MoniterSubClass inherits from the Monitor class. It hooks into the 
+    controller and monitors it's progress. every time the controller 
+    registers a record completion event after appending the value of 
+    the current	evaluation EvalRecord.value. The on_complete method 
+    is invoked, sending the value of the latest evaluation to the 
+    client.
 
-	:param controller: The controller object to be monitered
-	:type controller: controller
- 
-	"""
+    :param controller: The controller object to be monitored
+    :type controller: controller
 
-	def __init__(self, controller):
-		"""Initilize the Monitor super class
-		"""
+    """
 
-		super(MonitorSubClass, self).__init__(controller)
-		
-	def on_complete(self, record):
-		"""Send the value of the recently completed evaluation to the client
+    def __init__(self, controller):
+        """Initialize the Monitor super class
+        """
 
-		:param record: Data structure containing information about the completed evaluation
-		:type record: EvalRecord
-		"""
+        super(MonitorSubClass, self).__init__(controller)
 
-		emit('abc',record.value)
-	
+    def on_complete(self, record):
+        """Send the value of the recently completed evaluation to the client
+
+        :param record: Data structure containing information about the 
+            completed evaluation
+        :type record: EvalRecord
+        """
+
+        emit('abc', record.value)
+
 
 class ControllerObject:
-	"""Initilize a POAP controller using user's input parameters
+    """Initialize a POAP controller using user's input parameters
 
-	This class recieves parameters for the controller in the form of a 
-	dictionary. The dictionary contains all the data needed, including 
-	the types of controller and stratagy to be used and all of their 
-	required input arguments.
+    This class receives parameters for the controller in the form of a 
+    dictionary. The dictionary contains all the data needed, including 
+    the types of controller and strategy to be used and all of their 
+    required input arguments.
 
-	:param input_argument: Parameters needed for setting up the controller and strategy
-	:type input_argument: dict
-	:param pySOT_Object: Optimization Problem, Adaptive Sampling, Surrogate Model and Experimental Design objects
-	:type pySOT_Object: dict
-	:param class_dict: Catogarised List of all classes in PySOT
-	:type class_dict: dict
+    :param input_argument: Parameters needed for setting up the 
+        controller and strategy
+    :type input_argument: dict
+    :param pysot_object: Optimization Problem, Adaptive Sampling, 
+        Surrogate Model and Experimental Design objects
+    :type pysot_object: dict
+    :param pysot_dict: Categorised List of all classes in PySOT
+    :type pysot_dict: dict
 
-	:ivar input_argument: Parameter for setting up controller object
-	:ivar pySOT_Object: PySOT objects needed for the problem
-	:ivar class_dict: Catogarised List of all classes in PySOT
-	"""
+    :raise ValueError: If any of the controller or strategy picked does
+        not exit
 
-	def __init__(self, input_argument, pySOT_Object, class_dict=None):
-		self.flag = False
-		self.msg = ''
+    :ivar monitor: Instance of MonitorSubClass
+    :ivar input_argument: Parameter for setting up controller object
+    :ivar pySOT_Object: PySOT objects needed for the problem
+    :ivar PySOT_dict: Categorised List of all classes in PySOT
+    :ivar strategy: Instance of PySOT strategy 
+    :ivar controller: Instance of POAP controller
 
-		if class_dict == None:
-			obj = pySOT_class_dict()
-			self.class_dict = obj.get_dict()
-		else:
-			self.class_dict = class_dict
-		
-		self.input_argument = input_argument
-		self.pySOT_Object = pySOT_Object
+    .. note: The init process is further broken in two methods
+        init_controller and init_strategy
 
-		print('starting strat')
-		try:
-			print('stratagy_begin')
-			self.stratagy = self.init_stratagy(input_argument['strategy'])
-			print('stratagy_close')
-		except:
-			self.msg = 'Could not initilize stratagy'
-			return
+    .. note: Before the controller object can be obtined. The strategy
+        and then the controller have to be intilized in that order, 
+        using the init_strategy and init_controller methods. Currently
+        both the methods are called from within __init__ but they can 
+        be called seperatly based on usage.
+    """
 
-		try:
-			self.controller = self.init_controller(input_argument['controller'])
-		except:
-			self.msg = 'Could not initilize Controller'
-			return
+    def __init__(self, input_argument, pysot_object, pysot_dict=None):
 
-		self.flag = True
+        if pysot_dict is None:
+            obj = PySOTDictionary()
+            self.PySOT_dict = obj.get_dict()
+        else:
+            self.PySOT_dict = pysot_dict
 
-	def init_controller(self, input_argument):
-		if input_argument['function'] in self.class_dict['controller']:
-			arguments = {}
-			for c in self.class_dict['controller'][ input_argument['function'] ][ 0 ]:
-				if c in input_argument:
-					arguments[c] = input_argument[c]
-				elif c == 'objective':
-					arguments[c] = self.pySOT_Object['data'].objfunction
-			print(arguments)
-			print(eval (input_argument['function'] ))
-			
-			
+        self.controller = None
+        self.strategy = None
+        self.monitor = None
+        self.input_argument = input_argument
+        self.pySOT_Object = pysot_object
 
-			controller = eval( input_argument['function'] ) (**arguments) 
-			controller.strategy = self.stratagy
-			self.monitor = MonitorSubClass(controller)
+        self.init_strategy(input_argument['strategy'])
+        self.init_controller(input_argument['controller'])
 
-			return controller
-		return 'controller not found'
+    def init_controller(self, controller_argument):
+        """Initialize the Controller using input arguments.
 
-	def init_stratagy(self, input_argument):
-		print(input_argument)
+        If the controller specified by the user exists in POAP then the 
+        arguments name for the controller and their values are extracted 
+        from PySOT_dict and controller_argument respectively. These arguments 
+        are then used to initialize the controller object.
 
-		if input_argument['function'] in self.class_dict['strategy']:
-			arguments = { 'worker_id' : 0 }
-			for c in self.class_dict['strategy'][ input_argument['function'] ][ 0 ]:
-				if c in input_argument:
-					if c == 'proj_fun':
-						arguments[c] = eval(input_argument[c])
-					else: 
-						arguments[c] = input_argument[c]
+        The eval() method is used to execute the controller, as the user 
+        only provides the server with the strings containing the controllers 
+        name. 
 
-			for c in self.class_dict['strategy'][ input_argument['function'] ][ 0 ]:
-				if c in self.pySOT_Object:
-					arguments[c] = self.pySOT_Object[c]
-			
-			return eval(input_argument['function'])(**arguments)
-		return 'strategy not found'
+        :param controller_argument: Information required to initialize 
+            controller
+        :type controller_argument: dict
+        """
 
+        if controller_argument['function'] in self.PySOT_dict['controller']:
+            arguments = {}
 
-	def get_controller(self):
-		if self.flag:
-			return self.flag, self.controller
-		else: 
-			return self.flag, self.msg
+            for args in self.PySOT_dict['controller'][controller_argument['function']][0]:
+                if args in controller_argument:
+                    arguments[args] = controller_argument[args]
+                elif args == 'objective':
+                    arguments[args] = self.pySOT_Object['data'].objfunction
+
+            self.controller = eval(controller_argument['function'])(**arguments)
+            self.controller.strategy = self.strategy
+            self.monitor = MonitorSubClass(self.controller)
+
+        else:
+            raise ValueError('Controller not Found')
+
+    def init_strategy(self, strategy_argument):
+        """Initializes the Strategy using input arguments.
+
+        If the strategy specified by the user exists in PySOT then the 
+        arguments name for the strategy and their values are extracted 
+        from PySOT_dict and controller_argument respectively. These 
+        arguments are then used to initialize the strategy object.
+
+        The eval() function is used to execute the strategy, as the user 
+        only provides the server with the strings containing the controllers 
+        name. 
+
+        :param strategy_argument: Information required to initialize 
+            strategy
+        :type strategy_argument: dict
+        """
+
+        if strategy_argument['function'] in self.PySOT_dict['strategy']:
+            arguments = {'worker_id': 0}
+            for c in self.PySOT_dict['strategy'][strategy_argument['function']][0]:
+                if c in strategy_argument:
+                    if c == 'proj_fun':
+                        arguments[c] = eval(strategy_argument[c])
+                    else:
+                        arguments[c] = strategy_argument[c]
+
+            for c in self.PySOT_dict['strategy'][strategy_argument['function']][0]:
+                if c in self.pySOT_Object:
+                    arguments[c] = self.pySOT_Object[c]
+
+            self.strategy = eval(strategy_argument['function'])(**arguments)
+
+        else:
+            raise ValueError('Strategy not Found')
+
+    def get_controller(self):
+        """Request the initialized controller object
+
+        :return: Controller Object
+        """
+
+        return self.controller
