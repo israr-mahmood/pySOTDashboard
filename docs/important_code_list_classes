@@ -1,0 +1,12 @@
+import sys, inspect
+def print_classes():
+    for name, obj in inspect.getmembers(sys.modules[pySOT]):
+        if inspect.isclass(obj):
+            print(obj)
+
+import pyclbr
+module_name = 'pySOT.experimental_design'
+module_info = pyclbr.readmodule_ex(module_name)
+print(module_info)
+for item in module_info.values():
+	print(item.name)

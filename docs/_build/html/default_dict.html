@@ -1,0 +1,152 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>&lt;no title&gt; &#8212; PySOT Dashboard 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <blockquote>
+<div><p>Client Input</p>
+<p>{
+‘experimental_design’:
+{‘BoxBehnken’: [[‘dim’], ‘None’],
+‘TwoFactorial’: [[‘dim’], ‘None’],
+‘LatinHypercube’: [[‘dim’, ‘npts’, ‘criterion’], [‘c’]],
+‘SymmetricLatinHypercube’: [[‘dim’, ‘npts’], ‘None’]},</p>
+<p>‘kernel’: [‘LinearKernel’, ‘TPSKernel’, ‘CubicKernel’],</p>
+<p>‘tail’: [‘ConstantTail’, ‘LinearTail’],</p>
+<p>‘surrogate_model’:
+{‘RBFInterpolant’: [[‘kernel’, ‘tail’, ‘maxp’, ‘eta’], [‘CubicKernel’, ‘LinearTail’, 500, 1e-08]]},</p>
+<p>‘delay’: [‘delay’],</p>
+<p>‘adaptive_sampling’:
+{‘CandidateDDS_INT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
+‘CandidateDDS’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
+‘CandidateUniform_INT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
+‘CandidateDYCORS_CONT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
+‘CandidateSRBF’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
+‘GeneticAlgorithm’: [[‘data’], ‘None’],
+‘CandidateDYCORS_INT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
+‘CandidateDYCORS’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
+‘CandidateSRBF_INT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
+‘MultiSampling’: [[‘strategy_list’, ‘cycle’], ‘None’],
+‘MultiStartGradient’: [[‘data’, ‘method’, ‘num_restarts’], [‘L-BFGS-B’, 30]],
+‘CandidateUniform_CONT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
+‘CandidateDDS_CONT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
+‘CandidateUniform’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
+‘CandidateSRBF_CONT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]]},</p>
+<p>‘optimization_problem’:
+{‘Rastrigin’: [[‘dim’], [10]],
+‘Levy’: [[‘dim’], [10]],
+‘Schwefel’: [[‘dim’], [10]],
+‘Quartic’: [[‘dim’], [10]],
+‘Exponential’: [[‘dim’], [10]],
+‘Hartman6’: [[‘dim’], [6]],
+‘Whitley’: [[‘dim’], [10]],
+‘Hartman3’: [[‘dim’], [3]],
+‘LinearMI’: [[‘dim’], [5]],
+‘Rosenbrock’: [[‘dim’], [10]],
+‘Sphere’: [[‘dim’], [10]],
+‘SchafferF7’: [[‘dim’], [10]],
+‘Griewank’: [[‘dim’], [10]],
+‘Ackley’: [[‘dim’], [10]],
+‘StyblinskiTang’: [[‘dim’], [10]],
+‘Keane’: [[‘dim’], [10]],
+‘Michalewicz’: [[‘dim’], [10]]},</p>
+<p>‘controller’:
+{‘SimTeamController’: [[‘objective’, ‘delay’, ‘workers’], ‘None’],
+‘SerialController’: [[‘objective’, ‘skip’], [False]],
+‘ThreadController’: [[], ‘None’],
+‘ScriptedController’: [[], ‘None’],
+‘Controller’: [[], ‘None’]},</p>
+<p>‘proj_fun’: [‘projection’],</p>
+<p>‘strategy’:
+{‘SyncStrategyNoConstraints’: [[‘worker_id’, ‘data’, ‘response_surface’, ‘maxeval’, ‘nsamples’, ‘exp_design’, ‘sampling_method’, ‘extra’, ‘extra_vals’], [‘None’, ‘None’, ‘None’, ‘None’]],
+‘SyncStrategyPenalty’: [[‘worker_id’, ‘data’, ‘response_surface’, ‘maxeval’, ‘nsamples’, ‘exp_design’, ‘sampling_method’, ‘extra’, ‘penalty’], [‘None’, ‘None’, ‘None’, 1000000.0]],
+‘SyncStrategyProjection’: [[‘worker_id’, ‘data’, ‘response_surface’, ‘maxeval’, ‘nsamples’, ‘exp_design’, ‘sampling_method’, ‘extra’, ‘proj_fun’], [‘None’, ‘None’, ‘None’, ‘None’]]}}</p>
+</div></blockquote>
+<p>Client Output</p>
+<p>{ “optimization_problem” :
+{“function” : “Ackley” , “dim” : 10} ,</p>
+<p>“experimental_design” :
+{ “function” : “SymmetricLatinHypercube” , “dim” : 10, “npts” : 21 } ,</p>
+<p>“surrogate_model” : { “function” : “RBFInterpolant” , “maxp” : 500 , “tail” : “LinearTail” , “kernel” : “CubicKernel” } ,</p>
+<p>“adaptive_sampling” : { “function” : “CandidateDYCORS” , “numcand” : 100 , “weights” : -1 } ,</p>
+<p>“controller” : { “function” : “SerialController” } ,</p>
+<p>“strategy” : { “function” : “SyncStrategyNoConstraints” , “nsamples” : 1 , “proj_fun” : “projection” } }’;</p>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Israr Mahmood (im278@cornell.edu), Peiyu Shi (ps734@cornell.edu).
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/default_dict.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

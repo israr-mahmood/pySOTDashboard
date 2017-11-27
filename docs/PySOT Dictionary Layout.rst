@@ -1,0 +1,69 @@
+PySOT Dictionary Layout
+=======================
+
+{
+'experimental_design': 
+{'BoxBehnken': [['dim'], 'None'], 
+ 'TwoFactorial': [['dim'], 'None'], 
+ 'LatinHypercube': [['dim', 'npts', 'criterion'], ['c']], 
+ 'SymmetricLatinHypercube': [['dim', 'npts'], 'None']}, 
+
+'kernel': ['LinearKernel', 'TPSKernel', 'CubicKernel'], 
+
+'tail': ['ConstantTail', 'LinearTail'], 
+
+'surrogate_model': 
+{'RBFInterpolant': [['kernel', 'tail', 'maxp', 'eta'], ['CubicKernel', 'LinearTail', 500, 1e-08]]}, 
+
+'delay': ['delay'], 
+
+'adaptive_sampling': 
+{'CandidateDDS_INT': [['data', 'numcand', 'weights'], ['None', 'None']], 
+ 'CandidateDDS': [['data', 'numcand', 'weights'], ['None', 'None']], 
+ 'CandidateUniform_INT': [['data', 'numcand', 'weights'], ['None', 'None']], 
+ 'CandidateDYCORS_CONT': [['data', 'numcand', 'weights'], ['None', 'None']], 
+ 'CandidateSRBF': [['data', 'numcand', 'weights'], ['None', 'None']], 
+ 'GeneticAlgorithm': [['data'], 'None'], 
+ 'CandidateDYCORS_INT': [['data', 'numcand', 'weights'], ['None', 'None']], 
+ 'CandidateDYCORS': [['data', 'numcand', 'weights'], ['None', 'None']], 
+ 'CandidateSRBF_INT': [['data', 'numcand', 'weights'], ['None', 'None']], 
+ 'MultiSampling': [['strategy_list', 'cycle'], 'None'], 
+ 'MultiStartGradient': [['data', 'method', 'num_restarts'], ['L-BFGS-B', 30]], 
+ 'CandidateUniform_CONT': [['data', 'numcand', 'weights'], ['None', 'None']], 
+ 'CandidateDDS_CONT': [['data', 'numcand', 'weights'], ['None', 'None']], 
+ 'CandidateUniform': [['data', 'numcand', 'weights'], ['None', 'None']], 
+ 'CandidateSRBF_CONT': [['data', 'numcand', 'weights'], ['None', 'None']]}, 
+
+'optimization_problem': 
+{'Rastrigin': [['dim'], [10]], 
+ 'Levy': [['dim'], [10]], 
+ 'Schwefel': [['dim'], [10]], 
+ 'Quartic': [['dim'], [10]], 
+ 'Exponential': [['dim'], [10]], 
+ 'Hartman6': [['dim'], [6]], 
+ 'Whitley': [['dim'], [10]], 
+ 'Hartman3': [['dim'], [3]], 
+ 'LinearMI': [['dim'], [5]], 
+ 'Rosenbrock': [['dim'], [10]], 
+ 'Sphere': [['dim'], [10]], 
+ 'SchafferF7': [['dim'], [10]], 
+ 'Griewank': [['dim'], [10]], 
+ 'Ackley': [['dim'], [10]], 
+ 'StyblinskiTang': [['dim'], [10]], 
+ 'Keane': [['dim'], [10]], 
+ 'Michalewicz': [['dim'], [10]]}, 
+
+'controller': 
+{'SimTeamController': [['objective', 'delay', 'workers'], 'None'], 
+'SerialController': [['objective', 'skip'], [False]], 
+'ThreadController': [[], 'None'], 
+'ScriptedController': [[], 'None'], 
+'Controller': [[], 'None']}, 
+
+'proj_fun': ['projection'], 
+
+'strategy': 
+{'SyncStrategyNoConstraints': [['worker_id', 'data', 'response_surface', 'maxeval', 'nsamples', 'exp_design', 'sampling_method', 'extra', 'extra_vals'], ['None', 'None', 'None', 'None']], 
+ 'SyncStrategyPenalty': [['worker_id', 'data', 'response_surface', 'maxeval', 'nsamples', 'exp_design', 'sampling_method', 'extra', 'penalty'], ['None', 'None', 'None', 1000000.0]], 
+ 'SyncStrategyProjection': [['worker_id', 'data', 'response_surface', 'maxeval', 'nsamples', 'exp_design', 'sampling_method', 'extra', 'proj_fun'], ['None', 'None', 'None', 'None']]}}
+
