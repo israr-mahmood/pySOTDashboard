@@ -1,6 +1,7 @@
 Surrogate Optimization Problem
 ==============================
 In order to start the Surrogate Optimization the client has to send four components over to the server.
+
 1. Optimization problem
 2. Surrogate model
 3. Experimental design 
@@ -8,7 +9,7 @@ In order to start the Surrogate Optimization the client has to send four compone
 
 A list of all possible object available to initialize their components is sent over to the client from the server, this list is explained in PySOT Dictionary Layout. The user will select their desired object from the list (displayed on the client's user interface) and hit the 'run' button. The client then compiles a JSON using the selected parameters and sends it over to the server over web-sockets. One sample JSON object is shown below. 
 
-.. code-block:: json
+.. code-block:: python
    :linenos:
    
    '{ 
