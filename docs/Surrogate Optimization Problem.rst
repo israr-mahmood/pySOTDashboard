@@ -11,7 +11,6 @@ A list of all possible object available to initialize their components is sent o
 
 .. code-block:: python
    :linenos:
-   
    '{ 
    "optimization_problem" : 
    {"function" : "Ackley" , "dim" : 10} , 
