@@ -13,7 +13,7 @@ Welcome to PySOT Dashboard's documentation!
    Quickstart
    PySOT Dasboard
    PySOT Dictionary Layout
-   Sample Client Output
+   Surrogate Optimization Problem
    Usage
    Tutorial
    Source Code

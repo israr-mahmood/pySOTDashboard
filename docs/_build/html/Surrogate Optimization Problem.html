@@ -1,0 +1,146 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Surrogate Optimization Problem &#8212; PySOT Dashboard 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Usage" href="Usage.html" />
+    <link rel="prev" title="PySOT Dictionary Layout" href="PySOT Dictionary Layout.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="surrogate-optimization-problem">
+<h1>Surrogate Optimization Problem<a class="headerlink" href="#surrogate-optimization-problem" title="Permalink to this headline">¶</a></h1>
+<p>In order to start the Surrogate Optimization the client has to send six components over to the server.</p>
+<ol class="arabic simple">
+<li>Optimization problem</li>
+<li>Surrogate model</li>
+<li>Experimental design</li>
+<li>Adaptive sampling</li>
+<li>Strategy</li>
+<li>Controller</li>
+</ol>
+<p>A list of all possible object available to initialize their components is sent over to the client from the server, this list is explained in PySOT Dictionary Layout. The user will select their desired object from the list (displayed on the client’s user interface) and hit the ‘run’ button. The client then compiles a JSON using the selected parameters and sends it over to the server over web-sockets. One sample JSON object is shown below.</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="nt">&quot;optimization_problem&quot;</span><span class="p">:</span>
+     <span class="p">{</span>
+       <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;Ackley&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;dim&quot;</span><span class="p">:</span> <span class="mi">10</span>
+     <span class="p">},</span>
+
+   <span class="nt">&quot;experimental_design&quot;</span><span class="p">:</span>
+     <span class="p">{</span>
+       <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;SymmetricLatinHypercube&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;dim&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+       <span class="nt">&quot;npts&quot;</span><span class="p">:</span> <span class="mi">21</span>
+     <span class="p">},</span>
+
+   <span class="nt">&quot;surrogate_model&quot;</span><span class="p">:</span>
+     <span class="p">{</span>
+       <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;RBFInterpolant&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;maxp&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+       <span class="nt">&quot;tail&quot;</span><span class="p">:</span> <span class="s2">&quot;LinearTail&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;kernel&quot;</span><span class="p">:</span> <span class="s2">&quot;CubicKernel&quot;</span>
+     <span class="p">},</span>
+
+   <span class="nt">&quot;adaptive_sampling&quot;</span><span class="p">:</span>
+     <span class="p">{</span>
+       <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;CandidateDYCORS&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;numcand&quot;</span><span class="p">:</span> <span class="mi">100</span>
+     <span class="p">},</span>
+
+   <span class="nt">&quot;controller&quot;</span><span class="p">:</span>
+     <span class="p">{</span>
+       <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;SerialController&quot;</span>
+     <span class="p">},</span>
+
+   <span class="nt">&quot;strategy&quot;</span><span class="p">:</span>
+     <span class="p">{</span>
+       <span class="nt">&quot;function&quot;</span><span class="p">:</span> <span class="s2">&quot;SyncStrategyNoConstraints&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;nsamples&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+       <span class="nt">&quot;proj_fun&quot;</span><span class="p">:</span> <span class="s2">&quot;projection&quot;</span>
+     <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Explanation</strong></p>
+<p>There is separate entry in the JSON for each of the six components. The key for each of the component is the component name and the value is another JSON object containing the object name to be initialized and it’s arguments. The key “function” refers to the object name and the following key, value pairs are the argument name and their value.</p>
+<p><strong>Note:</strong> When the default values of the arguments are to be used then the argument are not included in the JSON.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="PySOT Dictionary Layout.html" title="previous chapter">PySOT Dictionary Layout</a></li>
+      <li>Next: <a href="Usage.html" title="next chapter">Usage</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Israr Mahmood (im278@cornell.edu), Peiyu Shi (ps734@cornell.edu).
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/Surrogate Optimization Problem.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -23,8 +23,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Sample Client Output" href="Sample Client Output.html" />
-    <link rel="prev" title="Quickstart" href="Quickstart.html" />
+    <link rel="next" title="Surrogate Optimization Problem" href="Surrogate Optimization Problem.html" />
+    <link rel="prev" title="PySOT Dasboard" href="PySOT Dasboard.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -42,64 +42,189 @@
             
   <div class="section" id="pysot-dictionary-layout">
 <h1>PySOT Dictionary Layout<a class="headerlink" href="#pysot-dictionary-layout" title="Permalink to this headline">¶</a></h1>
-<blockquote>
-<div><p>{
-‘experimental_design’:
-{‘BoxBehnken’: [[‘dim’], ‘None’],
-‘TwoFactorial’: [[‘dim’], ‘None’],
-‘LatinHypercube’: [[‘dim’, ‘npts’, ‘criterion’], [‘c’]],
-‘SymmetricLatinHypercube’: [[‘dim’, ‘npts’], ‘None’]},</p>
-<p>‘kernel’: [‘LinearKernel’, ‘TPSKernel’, ‘CubicKernel’],</p>
-<p>‘tail’: [‘ConstantTail’, ‘LinearTail’],</p>
-<p>‘surrogate_model’:
-{‘RBFInterpolant’: [[‘kernel’, ‘tail’, ‘maxp’, ‘eta’], [‘CubicKernel’, ‘LinearTail’, 500, 1e-08]]},</p>
-<p>‘delay’: [‘delay’],</p>
-<p>‘adaptive_sampling’:
-{‘CandidateDDS_INT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
-‘CandidateDDS’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
-‘CandidateUniform_INT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
-‘CandidateDYCORS_CONT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
-‘CandidateSRBF’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
-‘GeneticAlgorithm’: [[‘data’], ‘None’],
-‘CandidateDYCORS_INT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
-‘CandidateDYCORS’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
-‘CandidateSRBF_INT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
-‘MultiSampling’: [[‘strategy_list’, ‘cycle’], ‘None’],
-‘MultiStartGradient’: [[‘data’, ‘method’, ‘num_restarts’], [‘L-BFGS-B’, 30]],
-‘CandidateUniform_CONT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
-‘CandidateDDS_CONT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
-‘CandidateUniform’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]],
-‘CandidateSRBF_CONT’: [[‘data’, ‘numcand’, ‘weights’], [‘None’, ‘None’]]},</p>
-<p>‘optimization_problem’:
-{‘Rastrigin’: [[‘dim’], [10]],
-‘Levy’: [[‘dim’], [10]],
-‘Schwefel’: [[‘dim’], [10]],
-‘Quartic’: [[‘dim’], [10]],
-‘Exponential’: [[‘dim’], [10]],
-‘Hartman6’: [[‘dim’], [6]],
-‘Whitley’: [[‘dim’], [10]],
-‘Hartman3’: [[‘dim’], [3]],
-‘LinearMI’: [[‘dim’], [5]],
-‘Rosenbrock’: [[‘dim’], [10]],
-‘Sphere’: [[‘dim’], [10]],
-‘SchafferF7’: [[‘dim’], [10]],
-‘Griewank’: [[‘dim’], [10]],
-‘Ackley’: [[‘dim’], [10]],
-‘StyblinskiTang’: [[‘dim’], [10]],
-‘Keane’: [[‘dim’], [10]],
-‘Michalewicz’: [[‘dim’], [10]]},</p>
-<p>‘controller’:
-{‘SimTeamController’: [[‘objective’, ‘delay’, ‘workers’], ‘None’],
-‘SerialController’: [[‘objective’, ‘skip’], [False]],
-‘ThreadController’: [[], ‘None’],
-‘ScriptedController’: [[], ‘None’],
-‘Controller’: [[], ‘None’]},</p>
-<p>‘proj_fun’: [‘projection’],</p>
-<p>‘strategy’:
-{‘SyncStrategyNoConstraints’: [[‘worker_id’, ‘data’, ‘response_surface’, ‘maxeval’, ‘nsamples’, ‘exp_design’, ‘sampling_method’, ‘extra’, ‘extra_vals’], [‘None’, ‘None’, ‘None’, ‘None’]],
-‘SyncStrategyPenalty’: [[‘worker_id’, ‘data’, ‘response_surface’, ‘maxeval’, ‘nsamples’, ‘exp_design’, ‘sampling_method’, ‘extra’, ‘penalty’], [‘None’, ‘None’, ‘None’, 1000000.0]],
-‘SyncStrategyProjection’: [[‘worker_id’, ‘data’, ‘response_surface’, ‘maxeval’, ‘nsamples’, ‘exp_design’, ‘sampling_method’, ‘extra’, ‘proj_fun’], [‘None’, ‘None’, ‘None’, ‘None’]]}}</p>
-</div></blockquote>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;experimental_design&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;BoxBehnken&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="s2">&quot;None&quot;</span><span class="p">],</span>
+      <span class="nt">&quot;TwoFactorial&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="s2">&quot;None&quot;</span><span class="p">],</span>
+      <span class="nt">&quot;LatinHypercube&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">,</span> <span class="s2">&quot;npts&quot;</span><span class="p">,</span> <span class="s2">&quot;criterion&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">]],</span>
+      <span class="nt">&quot;SymmetricLatinHypercube&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">,</span> <span class="s2">&quot;npts&quot;</span><span class="p">],</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+
+  <span class="nt">&quot;kernel&quot;</span><span class="p">:</span>
+    <span class="p">[</span>
+      <span class="s2">&quot;LinearKernel&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;TPSKernel&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;CubicKernel&quot;</span>
+    <span class="p">],</span>
+
+  <span class="nt">&quot;tail&quot;</span><span class="p">:</span>
+    <span class="p">[</span>
+      <span class="s2">&quot;ConstantTail&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;LinearTail&quot;</span>
+    <span class="p">],</span>
+
+  <span class="nt">&quot;delay&quot;</span><span class="p">:</span>
+    <span class="p">[</span>
+      <span class="s2">&quot;delay&quot;</span>
+    <span class="p">],</span>
+
+  <span class="nt">&quot;proj_fun&quot;</span><span class="p">:</span>
+    <span class="p">[</span>
+      <span class="s2">&quot;projection&quot;</span>
+    <span class="p">],</span>
+
+  <span class="nt">&quot;surrogate_model&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;RBFInterpolant&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;kernel&quot;</span><span class="p">,</span> <span class="s2">&quot;tail&quot;</span><span class="p">,</span> <span class="s2">&quot;maxp&quot;</span><span class="p">,</span> <span class="s2">&quot;eta&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;CubicKernel&quot;</span><span class="p">,</span> <span class="s2">&quot;LinearTail&quot;</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mf">1e-08</span><span class="p">]</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+
+  <span class="nt">&quot;adaptive_sampling&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;CandidateDDS_INT&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;numcand&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;CandidateDDS&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;numcand&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;CandidateUniform_INT&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;numcand&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;CandidateDYCORS_CONT&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;numcand&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;CandidateSRBF&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;numcand&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;GeneticAlgorithm&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">],</span>
+          <span class="s2">&quot;None&quot;</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;CandidateDYCORS_INT&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;numcand&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;CandidateDYCORS&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;numcand&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;CandidateSRBF_INT&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;numcand&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;MultiSampling&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;strategy_list&quot;</span><span class="p">,</span> <span class="s2">&quot;cycle&quot;</span><span class="p">],</span>
+          <span class="s2">&quot;None&quot;</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;MultiStartGradient&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;method&quot;</span><span class="p">,</span> <span class="s2">&quot;num_restarts&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;CandidateUniform_CONT&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;numcand&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;CandidateDDS_CONT&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;numcand&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;CandidateUniform&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;numcand&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;CandidateSRBF_CONT&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;numcand&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+
+  <span class="nt">&quot;optimization_problem&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;Rastrigin&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;Levy&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;Schwefel&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;Quartic&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;Exponential&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;Hartman6&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">]],</span>
+      <span class="nt">&quot;Whitley&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;Hartman3&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">]],</span>
+      <span class="nt">&quot;LinearMI&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">]],</span>
+      <span class="nt">&quot;Rosenbrock&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;Sphere&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;SchafferF7&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;Griewank&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;Ackley&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;StyblinskiTang&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;Keane&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]],</span>
+      <span class="nt">&quot;Michalewicz&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;dim&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">]]</span>
+    <span class="p">},</span>
+
+  <span class="nt">&quot;controller&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;SimTeamController&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;objective&quot;</span><span class="p">,</span> <span class="s2">&quot;delay&quot;</span><span class="p">,</span> <span class="s2">&quot;workers&quot;</span><span class="p">],</span> <span class="s2">&quot;None&quot;</span><span class="p">],</span>
+      <span class="nt">&quot;SerialController&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;objective&quot;</span><span class="p">,</span> <span class="s2">&quot;skip&quot;</span><span class="p">],</span> <span class="p">[</span><span class="kc">false</span><span class="p">]],</span>
+      <span class="nt">&quot;ThreadController&quot;</span><span class="p">:</span> <span class="p">[[],</span> <span class="s2">&quot;None&quot;</span><span class="p">],</span>
+      <span class="nt">&quot;ScriptedController&quot;</span><span class="p">:</span> <span class="p">[[],</span> <span class="s2">&quot;None&quot;</span><span class="p">],</span>
+      <span class="nt">&quot;Controller&quot;</span><span class="p">:</span> <span class="p">[[],</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+
+  <span class="nt">&quot;strategy&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;SyncStrategyNoConstraints&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span>
+            <span class="s2">&quot;worker_id&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;response_surface&quot;</span><span class="p">,</span> <span class="s2">&quot;maxeval&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;nsamples&quot;</span><span class="p">,</span> <span class="s2">&quot;exp_design&quot;</span><span class="p">,</span> <span class="s2">&quot;sampling_method&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;extra&quot;</span><span class="p">,</span> <span class="s2">&quot;extra_vals&quot;</span>
+          <span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;SyncStrategyPenalty&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span>
+            <span class="s2">&quot;worker_id&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;response_surface&quot;</span><span class="p">,</span> <span class="s2">&quot;maxeval&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;nsamples&quot;</span><span class="p">,</span> <span class="s2">&quot;exp_design&quot;</span><span class="p">,</span> <span class="s2">&quot;sampling_method&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;extra&quot;</span><span class="p">,</span> <span class="s2">&quot;penalty&quot;</span>
+          <span class="p">],</span>
+          <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="mf">1000000.0</span><span class="p">]</span>
+        <span class="p">],</span>
+      <span class="nt">&quot;SyncStrategyProjection&quot;</span><span class="p">:</span>
+        <span class="p">[</span>
+          <span class="p">[</span>
+            <span class="s2">&quot;worker_id&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;response_surface&quot;</span><span class="p">,</span> <span class="s2">&quot;maxeval&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;nsamples&quot;</span><span class="p">,</span> <span class="s2">&quot;exp_design&quot;</span><span class="p">,</span> <span class="s2">&quot;sampling_method&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;extra&quot;</span><span class="p">,</span> <span class="s2">&quot;proj_fun&quot;</span>
+           <span class="p">],</span>
+           <span class="p">[</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">]</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 
 
@@ -111,8 +236,8 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="Quickstart.html" title="previous chapter">Quickstart</a></li>
-      <li>Next: <a href="Sample Client Output.html" title="next chapter">Sample Client Output</a></li>
+      <li>Previous: <a href="PySOT Dasboard.html" title="previous chapter">PySOT Dasboard</a></li>
+      <li>Next: <a href="Surrogate Optimization Problem.html" title="next chapter">Surrogate Optimization Problem</a></li>
   </ul></li>
 </ul>
 </div>
