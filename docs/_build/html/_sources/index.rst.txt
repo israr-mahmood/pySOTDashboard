@@ -12,6 +12,7 @@ Welcome to PySOT Dashboard's documentation!
 
    Quickstart
    PySOT Dasboard
+   Client
    PySOT Dictionary Layout
    Surrogate Optimization Problem
    Usage

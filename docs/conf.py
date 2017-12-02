@@ -18,8 +18,8 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../server'))
-sys.path.insert(0, os.path.abspath('../client'))
+sys.path.insert(0, os.path.abspath('../pySOTDashboard/server'))
+sys.path.insert(0, os.path.abspath('../pySOTDashboard/client'))
 
 
 # -- General configuration ------------------------------------------------

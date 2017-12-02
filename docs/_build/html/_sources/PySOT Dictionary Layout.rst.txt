@@ -90,8 +90,17 @@ Projection Function
 | **FILE:** pySOTDashboard/projection_function.py
 | **STRUCTURE:** The list contains the list of user defined projection functions.
 
-second is none 
-sequesnce of defalut values
+*Note:* For some of the list of list entries in the dictionary, it can
+be seen that instead of have a list as a second entry there is just 
+a single "None" entry. This means that this piticular class did not have
+any default values.
+
+*Note:* In most cases the number of default values are lesser than
+the number of input arguments for most of the objects. This means that
+not all arguments had default values. As an example if an object had 
+list of arguments ['a', 'b', 'c'] and default values ['x', 'y']. Then
+'b' would have the default value 'x' and 'c' would have 'y'. It is 
+assumed that this order is preserved in later versions of PySOT.
 
 .. code-block:: json
 

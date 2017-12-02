@@ -9,7 +9,11 @@ In order to start the Surrogate Optimization the client has to send six componen
 5. Strategy
 6. Controller
 
-A list of all possible object available to initialize their components is sent over to the client from the server, this list is explained in PySOT Dictionary Layout. The user will select their desired object from the list (displayed on the client's user interface) and hit the 'run' button. The client then compiles a JSON using the selected parameters and sends it over to the server over web-sockets. One sample JSON object is shown below. 
+A list of all possible object available to initialize their components is sent over to the client from the server, this list is explained in `PySOT Dictionary Layout`__. The Layout of the client is explained in the Client_ Tab. The user will select their desired object from the list (displayed on the client's user interface) and hit the 'run' button. The client then compiles a JSON using the selected parameters and sends it over to the server over web-sockets. One sample JSON object is shown below. 
+
+.. _Client: Client.html
+.. _holder: PySOT%20Dictionary%20Layout.html
+__ holder_
 
 .. code-block:: json
 

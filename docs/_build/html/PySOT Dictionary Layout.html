@@ -147,8 +147,16 @@ Controller and the second list contains the default values for the arguments.</d
 <div class="line"><strong>FILE:</strong> pySOTDashboard/projection_function.py</div>
 <div class="line"><strong>STRUCTURE:</strong> The list contains the list of user defined projection functions.</div>
 </div>
-<p>second is none
-sequesnce of defalut values</p>
+<p><em>Note:</em> For some of the list of list entries in the dictionary, it can
+be seen that instead of have a list as a second entry there is just
+a single “None” entry. This means that this piticular class did not have
+any default values.</p>
+<p><em>Note:</em> In most cases the number of default values are lesser than
+the number of input arguments for most of the objects. This means that
+not all arguments had default values. As an example if an object had
+list of arguments [‘a’, ‘b’, ‘c’] and default values [‘x’, ‘y’]. Then
+‘b’ would have the default value ‘x’ and ‘c’ would have ‘y’. It is
+assumed that this order is preserved in later versions of PySOT.</p>
 <div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;experimental_design&quot;</span><span class="p">:</span>
     <span class="p">{</span>
