@@ -155,17 +155,26 @@ class ControllerObject:
         """
 
         if strategy_argument['function'] in self.PySOT_dict['strategy']:
-            arguments = {'worker_id': 0}
-            for c in self.PySOT_dict['strategy'][strategy_argument['function']][0]:
-                if c in strategy_argument:
-                    if c == 'proj_fun':
-                        arguments[c] = eval(strategy_argument[c])
-                    else:
-                        arguments[c] = strategy_argument[c]
+            if 'MultiSampling' == strategy_argument['function']:
+                strategies = []
+                for strategy_ in strategy_argument['strategy_list']:
+                    self.init_strategy(strategy_argument['strategy_list'][strategy_])
+                    strategies.append(self.strategy)
+                arguments = {'strategy_list': strategies}
+                if 'cycle' in strategy_argument:
+                    arguments['cycle'] = strategy_argument['cycle']
+            else:
+                arguments = {'worker_id': 0}
+                for c in self.PySOT_dict['strategy'][strategy_argument['function']][0]:
+                    if c in strategy_argument:
+                        if c == 'proj_fun':
+                            arguments[c] = eval(strategy_argument[c])
+                        else:
+                            arguments[c] = strategy_argument[c]
 
-            for c in self.PySOT_dict['strategy'][strategy_argument['function']][0]:
-                if c in self.pySOT_Object:
-                    arguments[c] = self.pySOT_Object[c]
+                for c in self.PySOT_dict['strategy'][strategy_argument['function']][0]:
+                    if c in self.pySOT_Object:
+                        arguments[c] = self.pySOT_Object[c]
 
             self.strategy = eval(strategy_argument['function'])(**arguments)
 

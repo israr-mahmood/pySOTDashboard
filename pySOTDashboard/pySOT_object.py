@@ -65,7 +65,7 @@ class PySOTObject:
         The method will return a dictionary containing the objects
         required to initialize the strategy for the Experiment.
 
-        :return: Dictionary
+        :return: dict
         """
 
         return {'data': self.data,

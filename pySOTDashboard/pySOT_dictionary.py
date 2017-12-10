@@ -245,13 +245,8 @@ class PySOTDictionary:
 
         mod_name = controller
         self.controller_dict = self.obj.get_class_names(mod_name)
-
-        del_list = []
-        for j in self.controller_dict:
-            if 'Controller' not in self.controller_dict[j].__name__:
-                del_list.append(j)
-        for j in del_list:
-            del self.controller_dict[j]
+        self.controller_dict = {i: self.controller_dict[i] \
+            for i in self.controller_dict if 'Controller' in i}
 
         for i in self.controller_dict:
             self.controller_dict[i] = \
@@ -260,7 +255,7 @@ class PySOTDictionary:
     def get_dict(self):
         """Request the PySOT Dictionary
 
-        :return: Dictionary
+        :return: dict
         """
 
         return {'kernel': self.kernel_list,
