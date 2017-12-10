@@ -156,11 +156,11 @@ class ControllerObject:
 
         if strategy_argument['function'] in self.PySOT_dict['strategy']:
             if 'MultiSampling' == strategy_argument['function']:
-                strategies = []
+                arguments['strategy_list'] = []
                 for strategy_ in strategy_argument['strategy_list']:
                     self.init_strategy(strategy_argument['strategy_list'][strategy_])
-                    strategies.append(self.strategy)
-                arguments = {'strategy_list': strategies}
+                    arguments['strategy_list'].append(self.strategy)
+
                 if 'cycle' in strategy_argument:
                     arguments['cycle'] = strategy_argument['cycle']
             else:

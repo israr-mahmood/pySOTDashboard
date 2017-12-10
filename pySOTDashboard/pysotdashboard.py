@@ -11,12 +11,13 @@
 """
 
 import logging
+import os
 import sys
 import traceback
 from twisted.python import log
 import json
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 import numpy as np
 from poap.controller import *
@@ -28,15 +29,20 @@ from module_scraper import GetModuleClass
 from pySOT_dictionary import PySOTDictionary
 from pySOT_object import PySOTObject
 
-app = Flask(__name__)
+
+template_dir = os.path.abspath(os.path.dirname(__file__))
+template_dir = os.path.join(template_dir,'client')
+app = Flask(__name__, template_folder = template_dir)
 app.config['SECRET_KEY'] = 'mysecret'
 socketio = SocketIO(app)
 
 
-def make_correction_to_data(parsed_json):
-    if parsed_json['adaptive_sampling']['weights'] == -1:
-        parsed_json['adaptive_sampling']['weights'] = None
+@app.route("/")
+def home():
+    """Remders the home page for the Dashboard application
+    """
 
+    return render_template('index.html')
 
 @socketio.on('get_dict')
 def sendingDict(msg):
@@ -78,7 +84,6 @@ def onMsgRun(msg):
     """
 
     parsed_json = json.loads(msg)
-    make_correction_to_data(parsed_json)
     class_dict = new_dict.get_dict()
 
     try:
