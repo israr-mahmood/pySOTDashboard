@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>PySOT Dasboard &#8212; PySOT Dashboard 1.0.0 documentation</title>
+    <title>PySOT Dashboard &#8212; PySOT Dashboard 1.0.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="PySOT Dictionary Layout" href="PySOT Dictionary Layout.html" />
+    <link rel="next" title="Client" href="Client.html" />
     <link rel="prev" title="Quickstart" href="Quickstart.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -40,8 +40,79 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="pysot-dasboard">
-<h1>PySOT Dasboard<a class="headerlink" href="#pysot-dasboard" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="pysot-dashboard">
+<h1>PySOT Dashboard<a class="headerlink" href="#pysot-dashboard" title="Permalink to this headline">¶</a></h1>
+<p>PySOTDashboard is web application for pySOT, a asynchronous parallel
+optimization toolbox for global deterministic optimization problems.
+The purpose of this application is to facilitate the user to be able
+to run the experiment remortly and moniter the results without
+having to install any of the dependencies on their machines.</p>
+<p>The toolbox is hosted on GitHub:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>https://github.com/peiyu313/pySOTDashboard
+</pre></div>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Before starting you will need Python 2.7.x. You need to have numpy, scipy, git and pip
+installed and we recommend installing Anaconda/Miniconda for your desired Python version.</p>
+<p>The setup file might not include some of the optional components of pySOT, if you want any
+of them then you are going to have to install them manually by following the guide here.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Currenty the only way to install the dashboard is by cloning the github repository.
+Run the following commands in the terminal</p>
+<div class="line-block">
+<div class="line">1. Clone the repository:</div>
+</div>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>git clone https://github.com/peiyu313/pySOTDashboard
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">2.2. Navigate to the repository using:</div>
+</div>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> pySOTDashboard
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">2.3. Install (you may need to use sudo for UNIX):</div>
+</div>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>python setup.py install
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>pySOTDashboard essentially provides the same features as pySOT as a
+web application. In order to understand the working of pySOT refer to:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>http://pysot.readthedocs.io/
+</pre></div>
+</div>
+<p>Several pySOT examples can be found at:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>https://github.com/dme65/pySOT/tree/master/pySOT/test
+</pre></div>
+</div>
+<p>Instruction on how to use the web client can be found in the docs.</p>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Q: How do I start the application?</div>
+<div class="line">A: Run the server “pySOTDashboard/pysotdashboard.py” and then navigate to
+127.0.0.1:5000 in your browser to access the Client.</div>
+<div class="line"><br /></div>
+<div class="line">Q: Which version of Python is supported?</div>
+<div class="line">A: All modules should work with Python 2 and Python 3. Except for the
+module_scrapper which is using inspect module. Therefore it is expected
+that you have Python 2 running.</div>
+</div>
+</div>
 </div>
 
 
@@ -54,7 +125,7 @@
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="Quickstart.html" title="previous chapter">Quickstart</a></li>
-      <li>Next: <a href="PySOT Dictionary Layout.html" title="next chapter">PySOT Dictionary Layout</a></li>
+      <li>Next: <a href="Client.html" title="next chapter">Client</a></li>
   </ul></li>
 </ul>
 </div>

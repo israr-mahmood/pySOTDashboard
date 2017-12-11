@@ -30,9 +30,9 @@ class PySOTObject:
 
     :ivar data: Instance of Optimization Problem
     :ivar exp_des: Instance of Experimental Design
-    :ivar surrogate = Instance of Surrogate Model
-    :ivar adapt_samp = Instance of Adaptive Sampling
-    :ivar maxeval = Number of max evaluations
+    :ivar surrogate: Instance of Surrogate Model
+    :ivar adapt_samp: Instance of Adaptive Sampling
+    :ivar maxeval: Number of max evaluations
 
     .. note: Only the back instances are implements. Other
         features such as heuristics need to be implemented.

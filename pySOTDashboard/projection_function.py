@@ -10,18 +10,15 @@
 
 """
 
-
 import numpy as np
 
 
 def projection(x):
-	"""Sample Projection Function
+    """Sample Projection Function
 
-	:param x: Input list
+    :param x: Input list
     :type x: int
-
     :return: Norm form of input list
     """
 
-	return x / np.linalg.norm(x)
-		
+    return x / np.linalg.norm(x)

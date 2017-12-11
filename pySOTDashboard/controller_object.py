@@ -9,7 +9,7 @@
 :Author: Israr Mahmood <im278@cornell.edu>
 
 """
-
+from gevent import sleep
 from flask_socketio import emit
 from poap.controller import *
 from poap.strategy import *
@@ -38,6 +38,9 @@ class MonitorSubClass(Monitor):
         """
 
         super(MonitorSubClass, self).__init__(controller)
+        for calls in controller.term_callbacks:
+            controller.remove_term_callback(calls)
+        controller.add_term_callback(self.on_terminate)
 
     def on_complete(self, record):
         """Send the value of the recently completed evaluation to the client
@@ -48,6 +51,13 @@ class MonitorSubClass(Monitor):
         """
 
         emit('abc', record.value)
+        sleep(0.000000001)
+
+    def on_terminate(self):
+        """Handle terminates
+        """
+
+        pass
 
 
 class ControllerObject:

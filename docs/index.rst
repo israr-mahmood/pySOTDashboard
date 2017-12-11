@@ -10,16 +10,12 @@ Welcome to PySOT Dashboard's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   Quickstart
    PySOT Dasboard
    Client
    PySOT Dictionary Layout
    Surrogate Optimization Problem
-   Usage
    Tutorial
    Source Code
-
-
 
 Indices and tables
 ==================

@@ -15,11 +15,8 @@ Welcome to PySOT Dashboard's documentation!
    Client
    PySOT Dictionary Layout
    Surrogate Optimization Problem
-   Usage
    Tutorial
    Source Code
-
-
 
 Indices and tables
 ==================

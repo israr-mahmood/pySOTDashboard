@@ -11,7 +11,6 @@
 """
 
 import logging
-import os
 import sys
 import traceback
 from twisted.python import log
@@ -20,6 +19,7 @@ import json
 from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 import numpy as np
+import os
 from poap.controller import *
 from poap.strategy import *
 from pySOT import *
@@ -31,15 +31,15 @@ from pySOT_object import PySOTObject
 
 
 template_dir = os.path.abspath(os.path.dirname(__file__))
-template_dir = os.path.join(template_dir,'client')
+template_dir = os.path.join(template_dir, 'client/')
 app = Flask(__name__, template_folder = template_dir)
 app.config['SECRET_KEY'] = 'mysecret'
 socketio = SocketIO(app)
 
 
-@app.route("/")
-def home():
-    """Remders the home page for the Dashboard application
+@app.route('/')
+def render_homepage():
+    """Render the homepage of pySOT Web Dashboard
     """
 
     return render_template('index.html')
@@ -52,7 +52,6 @@ def sendingDict(msg):
     """
 
     emit('recv_dict', json.dumps(class_dict))
-
 
 @socketio.on('run')
 def onMsgRun(msg):
@@ -107,31 +106,9 @@ def onMsgRun(msg):
 
     result = controller.run()
 
-    print('Best value found: {0}'.format(result.value))
-    print('Best solution found: {0}'.format(
-        np.array_str(result.params[0], max_line_width=np.inf,
-                     precision=5, suppress_small=True)))
-
-    # Step 3
-    import matplotlib.pyplot as plt
-
-    # Extract function values from the controller
-    fvals = np.array([o.value for o in controller.fevals])
-
-    f, ax = plt.subplots()
-    print(np.arange(0, pySOTObj['maxeval']))
-    print(fvals)
-
-    ax.plot(np.arange(0, pySOTObj['maxeval']), fvals, 'bo')  # Points
-    ax.plot(np.arange(0, pySOTObj['maxeval']), np.minimum.accumulate(fvals), 'r-', linewidth=4.0)  # Best value found
-    plt.xlabel('Evaluations')
-    plt.ylabel('Function Value')
-    plt.title(pySOTObj['data']
-              .info)
-    plt.show()
-
 
 if __name__ == '__main__':
+    print(template_dir)
     log.startLogging(sys.stdout)
 
     global new_dict

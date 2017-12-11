@@ -1,4 +1,1 @@
-PySOT Dasboard
-==============
-
-
+.. include:: ../README.rst

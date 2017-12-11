@@ -2,7 +2,7 @@ Source Code
 ===========
 Server
 ------
-.. automodule:: server
+.. automodule:: pysotdashboard
     :members:
 
 PySOT Dictionary
@@ -32,5 +32,5 @@ Projection Function
 
 Delay Functions
 ---------------
-.. automodule:: delay_functions
+.. automodule:: delay_function
     :members:
