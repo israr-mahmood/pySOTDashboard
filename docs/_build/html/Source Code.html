@@ -100,6 +100,20 @@ to initialize the experiment.</li>
 </dd></dl>
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="section" id="module-pySOT_dictionary">
 <span id="pysot-dictionary"></span><h2>PySOT Dictionary<a class="headerlink" href="#module-pySOT_dictionary" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-pySOT_dictionary"></span><table class="docutils field-list" frame="void" rules="none">
@@ -285,6 +299,18 @@ tail objects in tails.py file.</p>
 </dd></dl>
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="section" id="module-pySOT_object">
 <span id="pysot-object"></span><h2>PySOT Object<a class="headerlink" href="#module-pySOT_object" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-pySOT_object"></span><table class="docutils field-list" frame="void" rules="none">
@@ -739,6 +765,158 @@ and the objects as values.</p>
 </dd></dl>
 
 </div>
+
+
+
+
+
+
+
+
+<div class="section" id="module-clientpage">
+<span id="clientpage"></span><h2>Client Page</h2>
+<span class="target" id="client-page"></span><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Module:</th><td class="field-body">Index.html</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Peiyu Shi &lt;<a class="reference external" href="mailto:ps734&#37;&#52;&#48;cornell&#46;edu">ps734<span>&#64;</span>cornell<span>&#46;</span>edu</a>&gt;</td>
+</tr>
+</tbody>
+</table>
+
+
+<dl class="function">
+<dt id="showHide">
+<code class="descclassname">index.</code><code class="descname">showHide</code><span class="sig-paren">(</span><em>shID</em><span class="sig-paren">)</span></dt>
+<dd><p>Toggle shows and hides the section with given ID.</p>
+<p>Given a section ID, shows and hide the section by a button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>shID</strong> (<em>json</em>) – Section ID</p>
+</td>
+</tr>
+
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+
+
+<dl class="function">
+<dt id="make_json">
+<code class="descclassname">index.</code><code class="descname">make_json</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span></dt>
+<dd><p>Generate JSON file upon user clicked submit button.</p>
+<p>The function is currently displaying JSON on client page for verification. Future work would be required to resolve the conflict between client side and server side. </p>
+<p>This fuction takes in a form and make json file that is parseable on server side.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>form</strong> (<em>json</em>) – form for a section in html.</p>
+</td>
+</tr>
+
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+
+
+
+<dl class="function">
+<dt id="set_val">
+<code class="descclassname">index.</code><code class="descname">set_val</code><span class="sig-paren">(</span><em>json</em><span class="sig-paren">)</span></dt>
+<dd><p>Parse the JSON file given from backend, and fill in the default values. Currently using the sample.json file,
+       should be changed to taking input JSON file from server.</p>
+
+
+</dd></dl>
+
+</div>
+
+
+
+
+
+
+
+
+<div class="section" id="module-imagedisplay">
+<span id="imagedisplay"></span><h2>Image Display</h2>
+<span class="target" id="client-page"></span><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Module:</th><td class="field-body">Index.html</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Peiyu Shi &lt;<a class="reference external" href="mailto:ps734&#37;&#52;&#48;cornell&#46;edu">ps734<span>&#64;</span>cornell<span>&#46;</span>edu</a>&gt;</td>
+</tr>
+</tbody>
+</table>
+
+
+<dl class="function">
+<dt id="run">
+<code class="descclassname">image.</code><code class="descname">run</code><span class="sig-paren">(</span><em>dataList</em><span class="sig-paren">)</span></dt>
+<dd><p>This function takes in a dataList from server side and construct an image for display. 
+It returns the script and div for javascript use. </p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dataList</strong> (<em>dataList</em>) – result sent from server side.</p>
+</td>
+</tr>
+
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+
+
+
+<dl class="function">
+<dt id="image_display">
+<code class="descclassname">bokeh_display.</code><code class="descname">display_image</code><span class="sig-paren">(</span><em>json</em><span class="sig-paren">)</span></dt>
+<dd><p>Given the json file representing the image of the result, display the image using bokeh.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>json</strong> (<em>json</em>) – json file representing the image</p>
+</td>
+</tr>
+
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 
 
