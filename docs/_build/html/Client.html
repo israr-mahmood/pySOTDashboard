@@ -42,6 +42,186 @@
             
   <div class="section" id="client">
 <h1>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- this is one section for server -->
+<div class="section" id="module-pysotdashboard">
+<span id="ClientPageLayout"></span><h2>Client Page Layout<a class="headerlink" href="#module-pysotdashboard" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-server"></span><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Module:</th><td class="field-body">Client Page Layout</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Peiyu Shi &lt;<a class="reference external" href="mailto:ps734&#37;&#52;&#48;cornell&#46;edu">ps734<span>&#64;</span>cornell<span>&#46;</span>edu</a>&gt;</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="generallayout">
+
+<dd><p>The client interface contains 6 main sections.</p>
+<p>The six sections contain "Optimization Problem", "Controller", "Adaptive Sampling", "Experimental Design", "Strategy" and "Surrogate Model". The sections are incorporated with expand and collaps funtionality where user can modify each secion in order and come back for modification if necassary. </p>
+<p>When user select a built-in function, the client side would fetch the dictionary with default values from server and populate current section with default values if provided. The user can then modify the parameters.</p>
+<p>There is a button at the end of the page, which is for submitting the parameters and generate result. Upon clicked, the client side will generate a JSON file with user-entered parameters and send it to server side. </p>
+<p>Upon getting result from server side, an image will be displayed with the result. The user can click on the link to view the result in form of an image.</p>
+
+</div>
+
+<!-- this is one section for server====== end -->
+
+<!-- another section for collecting user input 11111-->
+<!-- another section for examples included 44444-->
+<!-- another section for making json and parsing json22222-->
+<!-- another section for image display 33333-->
+
+
+
+
+
+
+
+
+
+
+<div class="section" id="module-userinput">
+<span id="userinput"></span><h2>User Input<a class="headerlink" href="#module-pysotdashboard" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module_userinput"></span><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Module:</th><td class="field-body">User Input</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Peiyu Shi &lt;<a class="reference external" href="mailto:ps734&#37;&#52;&#48;cornell&#46;edu">ps734<span>&#64;</span>cornell<span>&#46;</span>edu</a>&gt;</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="user_input">
+<p> This sections shows the parameters that requires user input for each section. Please refernece the "Option" section of PySOT tutorial for description and details for each parameters . Note that some inputs are populated with default values with the dictionary at server. The default values, and the change of input parts are flexible. In other words, if the server changes th defualt values, modifying the code is not needed. However, the parameters are hardcoded, which can be improved in future work. For instance, if the number of parameters changes, modifying the code would be necassary.  </p>
+
+<div class="section" id="experimental-design">
+<h3>Experimental Design<a class="headerlink" href="#experimental-design" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line"><strong>Method:</strong> Required Method.</div>
+<div class="line"><strong>dim:</strong> Dimensionality.</div>
+<div class="line"><strong>npts:</strong> Number of points in the design.</div>
+</div>
+</div>
+
+<div class="section" id="surrogate-model">
+<h3>Surrogate Model<a class="headerlink" href="#surrogate-model" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line"><strong>Method:</strong> Required Method. Please refer to PySOT documentation for the list of surrogate models supported.</div>
+<div class="line"><strong>nump:</strong> Number of data points (integer).</div>
+<div class="line"><strong>maxp:</strong> Maximum number of data points (integer).</div>
+<div class="line"><strong>kernel:</strong> Select from a list of kernels.</div>
+<div class="line"><strong>tail:</strong> Select from a list of tails.</div>
+</div>
+</div>
+  
+
+<div class="section" id="adaptive-sampling">
+<h3>Adaptive Sampling<a class="headerlink" href="#adaptive-sampling" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line"><strong>Method:</strong> Required Method. Please refer to PySOT documentation.</div>
+<div class="line"><strong>numcand:</strong> How many perturbations should be generated around the best solution found so far</div>
+<div class="line"><strong>weights:</strong> A list of weights for each point.</div>
+</div>
+</div>
+
+
+<div class="section" id="optimization-problem">
+<h3>Optimization Problem<a class="headerlink" href="#optimization-problem" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line"><strong>Method:</strong> Required Method. Please refer to PySOT documentation.</div>
+<div class="line"><strong>dim:</strong> Dimension.</div>
+<p>Note that the other parameters for optimization problem, such as xlow and xup, is not enabled for user modification so far.</p>
+</div>
+</div>
+
+
+<div class="section" id="strategy">
+<h3>Strategy<a class="headerlink" href="#strategy" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line"><strong>Strategy:</strong> Choose from a list of strategies.</div>
+
+</div>
+</div>
+
+
+<div class="section" id="controller">
+<h3>Controller<a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line"><strong>Controller:</strong> Select from a list of controllers. </div>
+
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+<!-- this is one section for server -->
+<div class="section" id="module-imagedisplay">
+<span id="imagediaplay"></span><h2>Image Displaying Result<a class="headerlink" href="#module-pysotdashboard" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="image_display"></span><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Module:</th><td class="field-body">Image Displaying Result</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Peiyu Shi &lt;<a class="reference external" href="mailto:ps734&#37;&#52;&#48;cornell&#46;edu">ps734<span>&#64;</span>cornell<span>&#46;</span>edu</a>&gt;</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="generallayout">
+
+<dd><p>The result as diaplayed in image.</p>
+<p>After the user clicked on a button at the end of all sections, a JSON file is generated containing all valued entered by the user and sending it to the backend. However, there is still an issue such that the JSON file generated from client side and the JSON parser from server side is not compatible, which requires future work. To visualize the input, the JSON generated is currently displayed on the client page, which can be disabled following comments in index.html. </p>
+<p>There is a link to the image which displays the optimizing process and result using bokeh. An exmaple is also provided showing how the image is going to be displayed with data inputed.</p>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 
 
