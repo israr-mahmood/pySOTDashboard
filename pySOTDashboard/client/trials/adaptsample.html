@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Adapt Sampling</title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+
+
+<!-- <p> this is just just testing. adapt, page 4. </p>
+ -->
+
+
+<div id="sidebar">
+  <ul>
+    <li><a href="optprob.html">Optimization Problem</a></li>
+    <li><a href="surmodel.html">Surrogate Model</a></li>
+    <li><a href="expdesign.html">Experimental Design</a></li>
+    <li><a href="#">Adaptive Sampling</a></li>
+    <li><a href="controller.html">Controller</a></li>
+    <li><a href="strategy.html">Strategy</a></li>
+    <li><a href="index.html">Index Page</a></li>
+
+  </ul>
+  
+
+  <div id="sidebar-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> 
+<script>
+  $(document).ready(function(){
+    $('#sidebar-btn').click(function(){
+      $('#sidebar').toggleClass('visible');
+      $('#buttons').toggleClass('visible');
+      $('#content').toggleClass('visible');
+    });
+  });
+
+</script>
+
+
+
+
+
+<div id="content">
+  <form onsubmit="return make_json(this);">
+    
+    <p>Select from an existing method.</p>
+    <select id="method" onChange="setval();">
+      <option selected disabled>Choose Here</option>
+      <option>CandidateDDS_INT</option>
+      <option>CandidateDDS</option>
+      <option>CandidateUniform_INT</option>
+      <option>CandidateDYCORS_CONT</option>
+      <option>CandidateSRBF</option>
+      <option>GeneticAlgorithm</option>
+      <option>CandidateDYCORS_INT</option>
+      <option>CandidateDYCORS</option>
+      <option>CandidateSRBF_INT</option>
+      <option>MultiStartGradient</option>
+      <option>CandidateUniform_CONT</option>
+      <option>CandidateDDS_CONT</option>
+      <option>CandidateUniform</option>
+      <option>CandidateSRBF_CONT</option>
+      <option>MultiSampling</option>
+    </select>
+
+    <p>
+      <p>Attributes</p>
+      numcand <input type="text" name="numcand" id="numcand"/><br/>
+      weights <input type="text" name="weights" id="weights"/><br/>
+    </p>
+
+
+
+    <input type="submit" value="Make JSON"/>
+  </form>
+
+
+
+
+  <pre id="output">
+    Fill the above form to make json...
+  </pre>
+
+  <script type="text/javascript">
+    function make_json(form){
+      var json={
+        "numcand":form.numcand.value,
+        "weights":form.weights.value
+      };
+      var html = JSON.stringify(json, 0, 4);
+      document.getElementById('output').innerHTML=html;
+      return false;
+    }
+  </script>
+
+  <script type="text/javascript" src="sample.json"></script>
+  <script type="text/javascript">
+    function setval(){
+      var input = JSON.parse(data);
+      var method = document.getElementById("method").value
+
+      document.getElementById("numcand").value = input[0]["adaptive_sampling"][document.getElementById("method").value][1][0];
+      document.getElementById("weights").value = input[0]["adaptive_sampling"][document.getElementById("method").value][1][1];
+
+    }
+  
+  </script>
+
+  
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+

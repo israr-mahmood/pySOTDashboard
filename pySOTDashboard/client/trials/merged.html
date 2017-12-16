@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Merged</title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+
+
+</head>
+
+
+
+<body>
+
+<div id="sidebar">  <!-- should be clickable buttons instead -->
+  <ul>
+    <li><a href="optprob.html">Optimization Problem</a></li>
+    <li><a href="surmodel.html">Surrogate Model</a></li>
+    <li><a href="expdesign.html">Experimental Design</a></li>
+    <li><a href="adaptsample.html">Adaptive Sampling</a></li>
+    <li><a href="controller.html">Controller</a></li>
+    <li><a href="strategy.html">Strategy</a></li>
+    <li><a href="index.html">Index Page</a></li>
+  </ul>
+  
+<div id="sidebar-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> 
+<script>
+  $(document).ready(function(){
+    $('#sidebar-btn').click(function(){
+      $('#sidebar').toggleClass('visible');
+      $('#buttons').toggleClass('visible');
+      $('#content').toggleClass('visible');
+    });
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="outprob">
+  <!-- <form onsubmit="return make_json_outprob(this);"> -->
+  <form>
+    <p>Select from an existing method.</p>
+    <select id="objfunct" onChange="setvaloutprob()";>
+        <option selected disabled>Choose Here</option>
+        <option>Rastrigin</option>
+        <option>Levy</option>
+        <option>Schwefel</option>
+        <option>Quartic</option>
+        
+        <option>Exponential</option>
+        <option>Hartman6</option>
+        <option>Whitley</option>
+        <option>Hartman3</option>
+        
+        <option>LinearMI</option>
+        <option>Rosenbrock</option>
+        <option>Sphere</option>
+        <option>SchafferF7</option>
+        <option>Griewank</option>
+        <option>Ackley</option>
+        <option>StyblinskiTang</option>
+        <option>Keane</option>          
+        <option>Michalewicz</option>
+    </select>
+    <p>
+      <p>Attributes</p>
+
+      dim <input type="text" name="opt_dim" id="opt_dim"/><br/>
+      
+    </p>
+ 
+<!--     <input type="submit" value="Make JSON"/> -->
+  </form>
+<!-- 
+  <pre id="outputoptprob">
+    Fill the above form to make json...
+  </pre>
+ -->
+  <script type="text/javascript">
+    function make_json_outprob(form){
+      var json={
+        "dim":form.opt_dim.value,
+        "objfunct":form.objfunct.value
+      };
+      var html = JSON.stringify(json, 0, 4);
+      document.getElementById('outputoptprob').innerHTML=html;
+      return false;
+    }
+  </script>
+
+  <script type="text/javascript" src="sample.json"></script>
+  <script type="text/javascript">
+    function setvaloutprob(){
+      var input = JSON.parse(data);
+      var method = document.getElementById("objfunct").value;
+      document.getElementById("opt_dim").value = input[0]["optimization_problem"][method][1];;
+      
+    }
+  </script>
+</div>
+
+
+<div id="strategy">
+<!--   <form onsubmit="return make_json_strategy(this);"> -->
+  <form>
+    <p>
+      <p>Select an Strategy</p>
+  <!--     add more description? -->
+        <select name="strategy" id="objfunct" onChange="setvalstrategy();">
+          <option selected disabled>Choose Here</option>
+          <option>SyncStrategyNoConstraints</option>
+          <option>SyncStrategyPenalty</option>
+          <option>SyncStrategyProjection</option>
+        </select>
+    </p>
+
+<!--     <input type="submit" value="Make JSON"/> -->
+  </form>
+<!-- 
+  <pre id="output_strategy">
+
+    Fill the above form to make json...
+  </pre> -->
+
+  <script type="text/javascript">
+    function make_json_strategy(form){
+      var json={
+        
+        "strategy":form.strategy.value, 
+
+      };
+      var html = JSON.stringify(json, 0, 4);
+      document.getElementById('output_strategy').innerHTML=html;
+      return false;
+    }
+  </script>
+  <script type="text/javascript">
+    function setvalstrategy(){
+      
+    }
+  </script>
+</div>
+
+
+
+
+
+<div id="adaptsample">
+<!--   <form onsubmit="return make_json_adapt(this);">   -->
+  <form>
+    <p>Select from an existing method.</p>
+    <select id="adapt_funct" onChange="setvaladapt();">
+      <option selected disabled>Choose Here</option>
+      <option>CandidateDDS_INT</option>
+      <option>CandidateDDS</option>
+      <option>CandidateUniform_INT</option>
+      <option>CandidateDYCORS_CONT</option>
+      <option>CandidateSRBF</option>
+      <option>GeneticAlgorithm</option>
+      <option>CandidateDYCORS_INT</option>
+      <option>CandidateDYCORS</option>
+      <option>CandidateSRBF_INT</option>
+      <option>MultiStartGradient</option>
+      <option>CandidateUniform_CONT</option>
+      <option>CandidateDDS_CONT</option>
+      <option>CandidateUniform</option>
+      <option>CandidateSRBF_CONT</option>
+      <option>MultiSampling</option>
+    </select>
+
+    <p>
+      <p>Attributes</p>
+      numcand <input type="text" name="numcand" id="numcand"/><br/>
+      weights <input type="text" name="weights" id="weights"/><br/>
+    </p>
+
+<!--     <input type="submit" value="Make JSON"/> -->
+  </form>
+<!-- 
+  <pre id="output_adapt">
+    Fill the above form to make json...
+  </pre>
+ -->
+  <script type="text/javascript">
+    function make_json_adapt(form){
+      var json={
+        "numcand":form.numcand.value,
+        "weights":form.weights.value,
+        "function":form.adapt_funct.value
+      };
+      var html = JSON.stringify(json, 0, 4);
+      document.getElementById('output_adapt').innerHTML=html;
+      return false;
+    }
+  </script>
+
+  <script type="text/javascript" src="sample.json"></script>
+  <script type="text/javascript">
+    function setvaladapt(){
+      var input = JSON.parse(data);
+      var method = document.getElementById("adapt_funct").value
+
+      document.getElementById("numcand").value = input[0]["adaptive_sampling"][document.getElementById("adapt_funct").value][1][0];
+      document.getElementById("weights").value = input[0]["adaptive_sampling"][document.getElementById("adapt_funct").value][1][1];
+    }
+  
+  </script>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="controller">
+ <!--  <form onsubmit="return make_json_controller(this);"> -->
+  <form>
+    <p>
+      <p>Select a Controller</p>
+  <!--     add more description? -->
+        <select name="controller" id="controller" onChange="setvalcontroller();">
+          <option selected disabled>Choose Here</option>
+          <option>SimTeamController</option>
+          <option>SerialController</option>
+          <option>ThreadController</option>
+          <option>ScriptedController</option>
+          <option>Controller</option>
+        </select>
+    </p>
+
+ 
+<!--     <input type="submit" value="Make JSON"/> -->
+  </form>
+<!-- 
+  <pre id="outputcontroller">
+    Fill the above form to make json...
+  </pre>
+ -->
+  <script type="text/javascript">
+    function make_json_controller(form){
+      var json={ 
+
+        "controller":form.controller.value
+      };
+      var html = JSON.stringify(json, 0, 4);
+      document.getElementById('outputcontroller').innerHTML=html;
+
+      return false;
+    }
+  </script>
+
+  <script type="text/javascript" src="sample.json"></script>
+  <script type="text/javascript">
+    function setvalcontroller(){
+
+      var input = JSON.parse(data);
+      var method = document.getElementById("controller").value
+      //populate if want to set values
+          
+    }
+ 
+  </script>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="expdesign">
+<!--   <form onsubmit="return make_json_expdesign(this);"> -->
+  <form>
+
+    <p>Select from an existing method.</p>
+      <select name="experimental_design" id="experimental_design" onChange="setvalexp();">
+        <option selected disabled>Choose Here</option>
+        <option>LatinHypercube</option>
+        <option>SymmetricLatinHypercube</option>
+        <option>TwoFactorial</option>
+        <option>BoxBehnken</option>
+      </select>
+    <p>
+      <p>Attributes</p>
+      dim <input type="text" name="dim" id="dim"/><br/>
+      npts <input type="text" name="npts" id="npts"/><br/>
+      criterion <input type="text" name="criterion" id="criterion" disabled/><br/>
+    </p>
+
+  
+<!--     <input type="submit" value="Make JSON"/> -->
+  </form>
+
+<!--   <p>
+    <pre id="outputexpdesign">
+      Fill the above form to make json...
+    </pre>
+  </p>
+ -->
+
+  <script type="text/javascript">
+    function make_json_expdesign(form){
+      var json={
+        
+        "experimental_design":form.experimental_design.value,
+        "dim":form.dim.value,
+        "npts":form.npts.value,
+        "criterion":form.criterion.value
+
+      };
+      var html = JSON.stringify(json, 0, 4);
+      document.getElementById('outputexpdesign').innerHTML=html;
+
+      return false;
+    }
+  </script>
+
+  <script type="text/javascript" src="sample.json"></script>
+  <script type="text/javascript">
+    function setvalexp(){
+      var input = JSON.parse(data);
+      var method = document.getElementById("experimental_design").value
+
+      if (method == "LatinHypercube"){
+        document.getElementById("criterion").disabled = false;
+      }
+      
+      document.getElementById("dim").value = input[0].experimental_design.BoxBehnken[1];
+      document.getElementById("npts").value = input[0].experimental_design.BoxBehnken[1];
+
+    }
+
+  </script>
+
+</div>
+
+
+
+
+
+
+<div id="surmodel">
+ <!--  <form onsubmit="return make_json_surmodel(this);"> -->
+  <form onsubmit="return make_json(this);">
+ <!--  <form> -->
+    <p>Select from an existing method.</p>
+    <select id="surmodel_funct" onChange="setvalsurmodel()";>
+      <option selected disabled>Choose Here</option>
+      <option>RBFInterpolant</option>
+    </select>
+
+    <p>
+      <p>Attributes</p>
+      maxp <input type="text" name="maxp" id="maxp"/><br/>
+      eta <input type="text" name="eta" id="eta"/><br/>
+    </p>
+
+
+    <p>Select a kernel.</p>
+    <select name="kernel" id="kernel">
+        <option selected disabled>Choose Here</option>
+        <option>LinearKernel</option>
+        <option>TPSKernel</option>
+        <option>CubicKernel</option>
+    </select>
+
+
+    <p>Select a tail.</p>
+      <select name="tail" id="tail">
+        <option selected disabled>Choose Here</option>
+        <option>ConstantTail</option>
+        <option>LinearTail</option>
+    </select>
+
+    <input type="submit" value="Make JSON"/>
+  </form>
+
+  <pre id="output">
+    Fill the above form to make json...
+  </pre>
+
+  <script type="text/javascript">
+    function make_json_surmodel(form){
+      var json={
+        "maxp":form.maxp.value,
+        "eta":form.eta.value,
+        "kernel":form.kernel.value,
+        "tail":form.tail.value,
+        "surmodel_funct":form.surmodel_funct.value
+      };
+      var html = JSON.stringify(json, 0, 4);
+      document.getElementById('outputsurmodel').innerHTML=html;
+      return false;
+    }
+  </script>
+
+  <script type="text/javascript" src="sample.json"></script>
+  <script type="text/javascript">
+    function setvalsurmodel(){
+      var input = JSON.parse(data);
+      var method = document.getElementById("surmodel_funct").value;
+      document.getElementById("maxp").value = input[0]["surrogate_model"][method][1][2];;
+      document.getElementById("eta").value = input[0]["surrogate_model"][method][1][3];;
+
+      document.getElementById("kernel").value = input[0]["surrogate_model"][method][1][0];;
+      document.getElementById("tail").value = input[0]["surrogate_model"][method][1][1];;
+    }
+  </script>
+
+
+
+<!-- this is the funct im currently working on; the funct that summs up all make json -->
+  <script type="text/javascript">
+    function make_json_combined(form){
+      var json={
+        "outprob_dim": document.getElementById("dim").value,
+        "outprob_objfunct":document.getElementById("objfunct").value,
+
+        "strategy_strategy":document.getElementById("strategy").value,
+
+        "adapt_numcand":document.getElementById("numcand").value,
+        "adapt_weights":document.getElementById("weights").value,
+        "adapt_function":document.getElementById("adapt_funct").value,
+
+        "controller_controller":document.getElementById("controller").value,
+
+        "expdesign_funct":document.getElementById("experimental_design").value,
+        "expdesign_dim":document.getElementById("dim").value,
+        "expdesign_npts":document.getElementById("npts").value,
+        "expdesign_criterion":document.getElementById("criterion").value,
+
+        "surmodel_maxp":document.getElementById("maxp").value,
+        "surmodel_eta":document.getElementById("eta").value,
+        "surmodel_kernel":document.getElementById("kernel").value,
+        "surmodel_tail":document.getElementById("tail").value,
+        "surmodel_funct":document.getElementById("surmodel_funct").value
+      };
+
+      var html = JSON.stringify(json, 0, 4);
+      document.getElementById('output').innerHTML=html;
+      return false;
+    }
+  </script>
+
+  <script type="text/javascript">
+    function make_json(form){
+      var json={
+        "optimization_problem":{"function": document.getElementById("objfunct").value, "dim":document.getElementById("dim").value},
+        "experimental_design": { "function" : document.getElementById("experimental_design").value, "dim" : document.getElementById("dim").value, "npts":  document.getElementById("npts").value, "criterion":document.getElementById("criterion").value}, 
+
+        "surrogate_model" : { "function" : document.getElementById("surmodel_funct").value, "maxp" : document.getElementById("maxp").value, "eta": document.getElementById("eta").value, "tail" : document.getElementById("tail").value, "kernel" : document.getElementById("kernel").value} , 
+
+        "adaptive_sampling" : { "function" : document.getElementById("adapt_funct").value, "numcand" : document.getElementById("numcand").value, "weights" : document.getElementById("weights").value} , 
+
+        "controller" : { "function" :  document.getElementById("controller").value} , 
+
+        "strategy" : { "function" : document.getElementById("strategy").value} 
+
+      }
+      var html = JSON.stringify(json, 0, 4);
+      document.getElementById('output').innerHTML=html;
+      return false;
+    }
+  </script>
+
+</div>
+
+
+</body>
+
+
+
+
+

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Surrogate Model</title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+
+
+<!-- <p> The surrogate model approximates the underlying objective function given all of the points that have been evaluated. </p> -->
+
+<div id="sidebar">
+  <ul>
+    <li><a href="optprob.html">Optimization Problem</a></li>
+    <li><a href="#">Surrogate Model</a></li>
+    <li><a href="expdesign.html">Experimental Design</a></li>
+    <li><a href="adaptsample.html">Adaptive Sampling</a></li>
+    <li><a href="controller.html">Controller</a></li>
+    <li><a href="strategy.html">Strategy</a></li>
+    <li><a href="index.html">Index Page</a></li>
+
+  </ul>
+  
+
+  <div id="sidebar-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> 
+<script>
+  $(document).ready(function(){
+    $('#sidebar-btn').click(function(){
+      $('#sidebar').toggleClass('visible');
+      $('#buttons').toggleClass('visible');
+      $('#content').toggleClass('visible');
+    });
+  });
+
+</script>
+
+
+
+
+<div id="content">
+  <form onsubmit="return make_json(this);">
+    
+    <p>Select from an existing method.</p>
+    <select id="method" onChange="setval()";>
+      <option selected disabled>Choose Here</option>
+      <option>RBFInterpolant</option>
+    </select>
+
+
+    <p>
+      <p>Attributes</p>
+      maxp <input type="text" name="maxp" id="maxp"/><br/>
+      eta <input type="text" name="eta" id="eta"/><br/>
+    </p>
+
+
+    <p>Select a kernel.</p>
+    <select name="kernel" id="kernel">
+        <option selected disabled>Choose Here</option>
+        <option>LinearKernel</option>
+        <option>TPSKernel</option>
+        <option>CubicKernel</option>
+    </select>
+
+
+    <p>Select a tail.</p>
+      <select name="tail" id="tail">
+        <option selected disabled>Choose Here</option>
+        <option>ConstantTail</option>
+        <option>LinearTail</option>
+    </select>
+
+    <input type="submit" value="Make JSON"/>
+  </form>
+
+  <pre id="output">
+    Fill the above form to make json...
+  </pre>
+
+  <script type="text/javascript">
+    function make_json(form){
+      var json={
+        "maxp":form.maxp.value,
+        "eta":form.eta.value,
+        "kernel":form.kernel.value,
+        "tail":form.tail.value
+      };
+      var html = JSON.stringify(json, 0, 4);
+      document.getElementById('output').innerHTML=html;
+      return false;
+    }
+  </script>
+
+  <script type="text/javascript" src="sample.json"></script>
+  <script type="text/javascript">
+    function setval(){
+      var input = JSON.parse(data);
+      var method = document.getElementById("method").value;
+      document.getElementById("maxp").value = input[0]["surrogate_model"][method][1][2];;
+      document.getElementById("eta").value = input[0]["surrogate_model"][method][1][3];;
+
+      document.getElementById("kernel").value = input[0]["surrogate_model"][method][1][0];;
+      document.getElementById("tail").value = input[0]["surrogate_model"][method][1][1];;
+    }
+  </script>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
