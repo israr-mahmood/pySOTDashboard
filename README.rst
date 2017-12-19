@@ -77,3 +77,18 @@ FAQ
 | A: All modules should work with Python 2 and Python 3. Except for the 
  	module_scrapper which is using inspect module. Therefore it is expected 
  	that you have Python 2 running.
+
+note
+----
+
+The server and the client have not been integrated so for
+at this point after completing every evaluation the server calls the
+'abc' event for the websockets and sends the value for the evaluation
+to the client. Ideally we would want to integrate bokeh to display 
+the optimization results on a graph to the user. The code for the 
+graph will go in the following method.
+
+.. code-block:: bash
+
+   file: pySOTDashboard/controller_object.py
+   code: MonitorSubClass.on_complete
